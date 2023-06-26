@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>垃圾收集器 | Java 开发知识体系</title>
+    <meta name="generator" content="VuePress 1.9.9">
+    
+    <meta name="description" content="xxxx">
+    
+    <link rel="preload" href="/assets/css/0.styles.f111fb23.css" as="style"><link rel="preload" href="/assets/js/app.0231cced.js" as="script"><link rel="preload" href="/assets/js/2.972344c2.js" as="script"><link rel="preload" href="/assets/js/18.05df3d31.js" as="script"><link rel="prefetch" href="/assets/js/10.3837ac29.js"><link rel="prefetch" href="/assets/js/11.18aa115b.js"><link rel="prefetch" href="/assets/js/12.cce639b3.js"><link rel="prefetch" href="/assets/js/13.771d4a93.js"><link rel="prefetch" href="/assets/js/14.b7a7b293.js"><link rel="prefetch" href="/assets/js/15.dc69d892.js"><link rel="prefetch" href="/assets/js/16.a965be8e.js"><link rel="prefetch" href="/assets/js/17.5d2d380f.js"><link rel="prefetch" href="/assets/js/19.58306047.js"><link rel="prefetch" href="/assets/js/20.3f850222.js"><link rel="prefetch" href="/assets/js/21.b179c6c0.js"><link rel="prefetch" href="/assets/js/22.0e3ebac6.js"><link rel="prefetch" href="/assets/js/23.1898e8f1.js"><link rel="prefetch" href="/assets/js/3.dc578df3.js"><link rel="prefetch" href="/assets/js/4.9126ee63.js"><link rel="prefetch" href="/assets/js/5.dbceb499.js"><link rel="prefetch" href="/assets/js/6.084197a9.js"><link rel="prefetch" href="/assets/js/7.305b84ee.js"><link rel="prefetch" href="/assets/js/8.a5d627b3.js"><link rel="prefetch" href="/assets/js/9.259ccf49.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.f111fb23.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">Java 开发知识体系</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="中间件" class="dropdown-title"><span class="title">中间件</span> <span class="arrow down"></span></button> <button type="button" aria-label="中间件" class="mobile-dropdown-title"><span class="title">中间件</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          消息中间件
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/md/middleware/kafka/Kafka系列一消息队列.html" class="nav-link">
+  Kafka 系列
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具｜部署" class="dropdown-title"><span class="title">工具｜部署</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具｜部署" class="mobile-dropdown-title"><span class="title">工具｜部署</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          IntelliJ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/md/devops/intellij/recommoned/禁用非必需插件，让 IDE 飞起.html" class="nav-link">
+  实用插件推荐
+</a></li><li class="dropdown-subitem"><a href="/md/devops/intellij/plugin/Simple Deployment.html" class="nav-link">
+  插件开发
+</a></li></ul></li><li class="dropdown-item"><h4>
+          CI &amp; CD
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/md/devops/tool/Jenkins安装及自动部署.html" class="nav-link">
+  Jenkins
+</a></li></ul></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="中间件" class="dropdown-title"><span class="title">中间件</span> <span class="arrow down"></span></button> <button type="button" aria-label="中间件" class="mobile-dropdown-title"><span class="title">中间件</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          消息中间件
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/md/middleware/kafka/Kafka系列一消息队列.html" class="nav-link">
+  Kafka 系列
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具｜部署" class="dropdown-title"><span class="title">工具｜部署</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具｜部署" class="mobile-dropdown-title"><span class="title">工具｜部署</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          IntelliJ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/md/devops/intellij/recommoned/禁用非必需插件，让 IDE 飞起.html" class="nav-link">
+  实用插件推荐
+</a></li><li class="dropdown-subitem"><a href="/md/devops/intellij/plugin/Simple Deployment.html" class="nav-link">
+  插件开发
+</a></li></ul></li><li class="dropdown-item"><h4>
+          CI &amp; CD
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/md/devops/tool/Jenkins安装及自动部署.html" class="nav-link">
+  Jenkins
+</a></li></ul></li></ul></div></div> <!----></nav>  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><p>Java 堆内存被划分为新生代和年老代两部分，新生代主要使用复制和标记-清除垃圾回收算法；年老代主要使用标记-整理垃圾回收算法，因此 java 虚拟中针对新生代和年老代分别提供了多种不同的垃圾收集器 JDK1.6 中 Sun HotSpot 虚拟机的垃圾收集器如下：</p> <p><img src="https://www.lin2j.tech/upload/2021/06/%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8%E6%90%AD%E9%85%8D-cac174d947b74e23a0ee2e1afa62d1d0.png" alt="垃圾收集器搭配"></p> <h4 id="serial-垃圾收集器"><a href="#serial-垃圾收集器" class="header-anchor">#</a> Serial 垃圾收集器</h4> <p><img src="https://www.lin2j.tech/upload/2021/06/Serial%20%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8-4ead39a2cc044549a85e7962563ed969.png" alt="Serial 垃圾收集器"></p> <ol><li>Serial 收集器是最基本，历史最悠久的收集器。</li> <li>Serial 收集器是一个<strong>单线程</strong>的收集器，这意味着它不仅是只会使用一个CPU或者一个线程去收集垃圾，而且在垃圾收集的时候，还要<strong>暂停其他的工作线程</strong>，直到它收集结束。</li> <li>Serial 收集器在只有一个CPU的环境下，由于没有线程交互的切换开销，可以更加专心地进行回收，获得最高单线程收集效率。</li> <li>Serial 收集器对于运行在 Client 模式下的虚拟机来说是一个很好的选择。</li></ol> <blockquote><p>JVM有两种运行模式Server与Client。两种模式的区别在于，Client模式启动速度较快，Server模式启动较慢；但是启动进入稳定期长期运行之后Server模式的程序运行速度比Client要快很多。这是因为Server模式启动的JVM采用的是重量级的虚拟机，对程序采用了更多的优化；而Client模式启动的JVM采用的是轻量级的虚拟机。所以Server启动慢，但稳定后速度比Client远远要快。</p> <p>使用Java -version命令就能显示出当前虚拟机处于哪种模式。</p></blockquote> <h4 id="parnew-收集器"><a href="#parnew-收集器" class="header-anchor">#</a> ParNew 收集器</h4> <p><img src="https://www.lin2j.tech/upload/2021/06/ParNew%20%E6%94%B6%E9%9B%86%E5%99%A8-2c034ce09d4b40b7ab00b990c1283fd5.png" alt="ParNew 收集器"></p> <ol><li>ParNew 收集器其实就是 <strong>Seial 收集器的多线程版本</strong>。</li> <li>除了使用多线程之外，其他的行为，诸如所有的控制参数、收集算法、Stop The World、对象分配原则，回收策略等都与Serial收集器完全一致。</li> <li>虽然与 Serial 收集器没有太大的差别，但是 ParNew 仍然是 Server 模式下的虚拟机中首选的收集器。其中一个重要原因就是，<strong>目前，除了 Serail 收集器外，只有 ParNew 能够与 CMS 收集器配合工作</strong>。</li> <li>ParNew 收集器也是使用 <code>-XX:+UseConcMarkSweepGC</code> 选项后默认的新生代收集器，也可以使用 <code>−XX:+UseParNewGC</code> 选项来强制使用它。</li> <li>它<strong>默认开启的线程数与CPU的数量相同</strong>，当服务器CPU数量太多时，可以使用<code>−XX:ParallelGCThreads</code> 参数来限制垃圾收集的线程数。</li></ol></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.0231cced.js" defer></script><script src="/assets/js/2.972344c2.js" defer></script><script src="/assets/js/18.05df3d31.js" defer></script>
+  </body>
+</html>

@@ -1,3 +1,7 @@
+---
+title: Kafka 系列 - 消息队列的选择
+---
+
 了解完消息队列的基本信息之后，接下来我们可以考虑消息队列的技术选型问题。
 
 目前使用较多的消息队列有 ActiveMQ、RabbitMQ、ZeroMQ、Kafka、MetaMQ、RocketMQ 等，以及数据库
@@ -69,7 +73,7 @@ RocketMQ 出自阿里的开源产品，用 Java 语言实现，在设计时参�
 - 亿级消息堆积能力
 - 较少的外部依赖
 
-![消息队列对比](https://www.lin2j.tech/upload/2021/05/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AF%B9%E6%AF%94-c4d4d6a7e51546e8a57c9c91522bd2e8.png)
+![消息队列对比](https://www.lin2j.tech/blog-image/kafka/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AF%B9%E6%AF%94.png)
 
 从上面的表格对可以得出几个简单结论：
 - 无论是在单机吞吐量还是可用性方面，ActiveMQ 和 RabbitMQ 都差不多，而 RocketMQ 和 Kafka 差不多

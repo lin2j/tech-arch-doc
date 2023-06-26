@@ -1,3 +1,7 @@
+---
+title: Kafka 系列 - 消费者
+---
+
 与生产者对应的是消费者，应用程序可以通过 KafkaConsumer 来订阅主题，从主题中拉取消息。
 
 使用 KafkaConsumer 之前需要先理解消费者和消费者组的概念。
@@ -16,7 +20,7 @@
 
 下图表示消费者组内不同数量的消费者与主题中分区的对应关系。
 
-![消费者组与主题的关系](https://www.lin2j.tech/upload/2021/08/%E6%B6%88%E8%B4%B9%E8%80%85%E7%BB%84%E4%B8%8E%E4%B8%BB%E9%A2%98%E7%9A%84%E5%85%B3%E7%B3%BB-9b9fd6deb3784c7f8554a63a43428e06.png)
+![消费者组与主题的关系](https://www.lin2j.tech/blog-image/kafka/%E6%B6%88%E8%B4%B9%E8%80%85%E7%BB%84%E4%B8%8E%E4%B8%BB%E9%A2%98%E7%9A%84%E5%85%B3%E7%B3%BB.png)
 
 对于 consumer group A，当消费者组内的消费者数量多于分区数目时，会出现有消费者分配不到分区的情况，造成资源浪费。
 
