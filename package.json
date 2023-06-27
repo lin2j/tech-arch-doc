@@ -1,21 +1,19 @@
 {
-  "devDependencies": {
-    "@vuepress/plugin-active-header-links": "^1.9.9",
-    "@vuepress/plugin-back-to-top": "1.9.9",
-    "vuepress-plugin-auto-sidebar": "^2.3.2",
-    "vuepress-plugin-right-anchor": "^0.5.5",
-    "vuepress-plugin-side-anchor": "^1.0.6",
-    "vuepress-plugin-toolbar": "^1.0.1"
+  "name": "tech-arch-doc",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:lin2j/tech-arch-doc.git",
+  "author": "lin2j <linjinjia047@163.com>",
+  "license": "MIT",
+  "dependencies": {
+    "vuepress": "^2.0.0-beta.63"
   },
   "scripts": {
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs"
   },
-  "name": "tech-arch-doc",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
-  "dependencies": {
-    "vuepress": "^1.9.9"
+  "devDependencies": {
+    "@vuepress/plugin-back-to-top": "^2.0.0-beta.63",
+    "@vuepress/plugin-search": "^2.0.0-beta.63"
   }
 }
