@@ -7,16 +7,34 @@ import { getSideBar4Java } from './sidebar/java'
 import { getSideBar4Devops } from './sidebar/devops'
 import { getSideBar4Middleware } from './sidebar/middleware'
 
+const description = "包含：Java 基础知识，Java 进阶知识，开发框架，设计模式，数据库，中间件，计算机网络，面试题，部署工具..."
+
 export default {
-    title: 'Java 开发知识体系',
-    description: 'xxxx',
+    // Byte Lab 该名称强调对计算机底层原理和字节级别操作的关注，并暗示了对技术的深入探索和实验的态度。
+    title: 'Byte Lab',
+    description: description,
     plugins: [
         backToTopPlugin({}),
         searchPlugin({})
     ],
     markdown: {
-        lineNumbers: true
+        lineNumbers: true,
+        externalLinks: {
+            target: '_blank', rel: 'noopener noreferrer'
+        }
     },
+    head: [
+        // ico
+        ["link", {rel: "icon", href: `/favicon.svg`}],
+        // meta
+        ["meta", {name: "robots", content: "all"}],
+        ["meta", {name: "author", content: "lin2j"}],
+        ["meta", {"http-equiv": "Cache-Control", content: "no-cache, no-store, must-revalidate"}],
+        ["meta", {"http-equiv": "Pragma", content: "no-cache"}],
+        ["meta", {"http-equiv": "Expires", content: "0"}],
+        ["meta", {name: "keywords", content: description}],
+        ["meta", {name: "apple-mobile-web-app-capable", content: "yes"}],
+    ],
     theme: defaultTheme({
         displayAllHeaders: false,
         navbar: [
