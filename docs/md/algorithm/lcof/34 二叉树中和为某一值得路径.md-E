@@ -1,0 +1,55 @@
+[剑指 Offer 34. 二叉树中和为某一值的路径](https://leetcode-cn.com/problems/er-cha-shu-zhong-he-wei-mou-yi-zhi-de-lu-jing-lcof/)
+
+**解题思路：**
+
+先序遍历：按照【根节点 | 左子树 | 右子树】顺序遍历树的全部节点。
+
+路径记录：在先序遍历中，记录当前节点到根节点的路径。当**路径为根节点到叶节点形成的路径** 且 **路径的和为目标值**时，将路径加入结果列表。
+
+**递归函数**
+
+- **传递参数：**当前节点 $root$，当前目标值 $curSum$，目标值 $target$，当前节点到根节点的路径 $path$。
+
+- **终止条件：**当前节点 $root$ 为 $null$；
+
+- **递推工作：**
+  1. 目标值更新：将当前节点值和 $curSum$ 相加；
+  2. 路径更新：将当前节点加入到 $path$ 中；
+  3. 路径记录：当前节点 $root$ 为叶子节点 且  $curSum + root.val $ 等于 $target$ 时，将 $path$ 加入结果列表。
+  4. 先序遍历：递归左子树和右子树。
+  5. 路径恢复：向上回溯前，需要将当前节点从路径 $path$ 中删除。
+
+**代码：**
+
+```java
+private List<List<Integer>> ans = new ArrayList<>();
+
+public List<List<Integer>> pathSum(TreeNode root, int target) {
+    if (root == null) {
+        return ans;
+    }
+    findPath(root, 0, target, new ArrayList<>());
+    return ans;
+}
+
+private void findPath(TreeNode root, int curSum, int target, List<Integer> list) {
+    if (root == null) {
+        return;
+    }
+    curSum += root.val;
+    list.add(root.val);
+    if (curSum == target && root.left == null && root.right == null) {
+            ans.add(new ArrayList<>(list));
+            list.remove(list.size() - 1);
+            return;
+    }
+    findPath(root.left, curSum, target, list);
+    findPath(root.right, curSum, target, list);
+    list.remove(list.size() - 1);
+}
+```
+
+**复杂度分析：**
+
+- **时间复杂度$O(N)$**：$N$ 为树的节点总数。
+- **空间复杂度$O(N)$**：最差情况下，即树退化成链表，$path$ 存储所有的节点，使用 $O(N$) 额外空间。

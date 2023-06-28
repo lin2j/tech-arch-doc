@@ -7,6 +7,7 @@ import { getSideBar4Java } from './sidebar/java'
 import { getSideBar4Devops } from './sidebar/devops'
 import { getSideBar4Middleware } from './sidebar/middleware'
 import { getSideBar4Interview } from './sidebar/interview'
+import { getSidebar4Algorithm } from './sidebar/algorithm'
 
 const description = "包含：Java 基础知识，Java 进阶知识，开发框架，设计模式，数据库，中间件，计算机网络，面试题，算法，部署工具..."
 
@@ -61,6 +62,17 @@ export default {
                 ]
             },
             {
+                text: "算法",
+                children: [
+                    {
+                        text: "算法题解",
+                        children: [
+                            {text: "剑指 Offer", link: "/md/algorithm/lcof/03 数组中重复的数字.md"}
+                        ]
+                    }
+                ]
+            },
+            {
                 text: "面试",
                 link: "/md/interview/MySQL.md",
             },
@@ -87,7 +99,8 @@ export default {
             "/md/java/": getSideBar4Java(),
             "/md/devops/": getSideBar4Devops(),
             "/md/middleware/": getSideBar4Middleware(),
-            "/md/interview": getSideBar4Interview()
+            "/md/interview": getSideBar4Interview(),
+            "/md/algorithm": getSidebar4Algorithm()
         }
     })
 }

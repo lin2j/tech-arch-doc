@@ -1,0 +1,54 @@
+[剑指 Offer 05. 替换空格](https://leetcode-cn.com/problems/ti-huan-kong-ge-lcof/)
+
+**解题思路：**
+
+> 以下思路尽量不调用 Java 的 API 。
+
+先统计原始字符串 $S$ 中的空格个数 $c$，最终字符串 $R$ 的长度会比 S 的长度长  $2 * c$。
+
+算法流程：
+
+1. 统计字符串 $S$ 中空格个数 $c$。
+2. 声明新的字符数组 $Rc$，长度为 $len(S) + 2 * c$ 。
+3. 重新遍历字符串 $S$ ，索引初始值为 $i = 0$, $R$ 索引初始值为 $j = 0$ ：
+   1. 如果 $S[i]$ 不为空格：执行 $S[i] = R[j]$ ；
+   2. 如果 $S[i]$ 为空格：将 $R$ 的 $[j, j+3)$ 区间的字符置为 "%20" 。
+4. 返回新的字符串 $R$; 
+
+**代码：**
+
+```java
+public String replaceSpace(String s) {
+    if (s == null || s.length() == 0) {
+        return s;
+    }
+    // 先计算空格的个数，然后原数组的长度加上空格数的两倍就是答案的长度
+    char[] chars = s.toCharArray();
+    int spaceCount = 0;
+    for (char c : chars) {
+        if (c == ' ') {
+            spaceCount++;
+        }
+    }
+    char[] ans = new char[chars.length + spaceCount * 2];
+    int i = 0, k = 0;
+    while(i < chars.length) {
+        char c = chars[i];
+        if(c == ' '){
+            ans[k++] = '%';
+            ans[k++] = '2';
+            ans[k++] = '0';
+        } else {
+            ans[k++] = c;
+        }
+        i++;
+    }
+    return new String(ans);
+}
+```
+
+**复杂度分析**
+
+- **时间复杂度 $O(N)$ **:  遍历统计使用 $O(N)$，每轮修改字符使用的是 $O(1)$ 时间。
+
+- **空间复杂度 $O(N)$** :  申请的空间为线性大小的额外空间。

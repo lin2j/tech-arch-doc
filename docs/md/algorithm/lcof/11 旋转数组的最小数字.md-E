@@ -1,0 +1,51 @@
+[剑指 Offer 11. 旋转数组的最小数字](https://leetcode-cn.com/problems/xuan-zhuan-shu-zu-de-zui-xiao-shu-zi-lcof/)
+
+# 方法一：二分查找
+
+题目给的数组是有序数组，可以考虑使用二分查找，可以将遍历法的**线性级别**转化为**对数级别**。
+
+假定数组的左边位置是 $left$ ，右边是 $right$，$left$ 和 $right$ 的中心位置为 $mid，mid = (left + mid) / 2$。
+
+- 若 $nums[mid] < nums[right]$ ， 说明 $[mid, right]$ 区间是递增的，那么最小值应该出现在 $[left, mid]$ 区间。
+
+- 若 $nums[mid] > nums[right]$， 说明 $[mid, right]$ 区间是先递增后递减的，那么最小值应该现在 $(mid + 1, right]$ 区间。$nums[mid]$ 不会是最小值。
+
+- 若 $nums[mid] == nums[right]$， 则无法判断 $[mid, right]$ 区间的单调性，但是可以把  $nums[right]$ 去掉。因为即使去掉 $nums[right]$ ，数组中还有 $nums[mid]$ ，所以不会对结果产生影响，把区间缩减为 $[left, right)$。
+
+> 补充说明：
+>
+> 上面的思路中，一直都是 $mid$ 和 $right$ 的对比，那么能不能将 $left$ 和 $mid$ 对比呢？
+>
+> 举例：$[3, 4, 5, 1, 2]$ 与 $[1, 2, 3, 4, 5]$ ，此时，中间位置的值都比左边大，但最小值一个在后面，一个在前面，因此这种做法不能有效地减治。
+
+**代码：**
+
+```java
+public int minArray(int[] nums) {
+    if (nums == null || nums.length == 0) {
+        return -1;
+    }
+    int l = 0;
+    int r = nums.length - 1;
+    while (l < r) {
+        int mid = l + ((r - l) >> 1);
+        if(nums[mid] < nums[r]){
+            r = mid;
+        } else if (nums[mid] > nums[r]){
+            l = mid+1;
+        } else {
+            // 舍弃 nums[r]
+            r--;
+        }
+    }
+    return nums[r];
+}
+```
+
+**复杂度分析**
+
+- **时间复杂度$O(logN)$**： 在特例情况下（例如 $[1,1,1,1]$），会退化到 $O(N)$ 。
+
+- **空间复杂度$O(1)$ **：$l, r, mid$ 使用的都是常数大小的空间。
+
+

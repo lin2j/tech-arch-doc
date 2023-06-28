@@ -1,0 +1,39 @@
+[剑指 Offer 39. 数组中出现次数超过一半的数字](https://leetcode-cn.com/problems/shu-zu-zhong-chu-xian-ci-shu-chao-guo-yi-ban-de-shu-zi-lcof/)
+
+**解题思路：**
+
+如果一定存在次数超过一半的数字，那么将数组中**每两个不同的数对相互抵消**，最后留下来的一定是超过一半次数的数字。
+
+如果没有指明一定存在该数字，那么需要对最终结果进行验证，计算其出现的次数超过总数的一半。
+
+**代码：**
+
+```java
+public int majorityElement(int[] nums) {
+    if (nums == null || nums.length == 0) {
+        return 0;
+    }
+    int ans = nums[0];
+    int times = 1;
+    for (int i = 1; i < nums.length; i++) {
+        if (times == 0) {
+            ans = nums[i];
+            times++;
+        } else {
+            if (ans == nums[i]) {
+                times++;
+            } else {
+                times--;
+            }
+        }
+    }
+    return ans;
+}
+```
+
+**复杂度分析**
+
+- **时间复杂度$O(N)$**：$N$ 为数组的元素个数。需要对每个元素进行遍历比较，比较占用 $O(1)$ 的时间。
+- **空间复杂度$O(1)$**：`ans` 和 `times` 都是占用常数大小的额外空间。
+
+思考：如果是存在三个数字，它们出现的总次数占用了总数的 $\frac{1}{4}$ ，如何找出这三个数字呢？

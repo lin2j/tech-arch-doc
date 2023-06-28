@@ -1,0 +1,63 @@
+[剑指 Offer 24. 反转链表](https://leetcode-cn.com/problems/fan-zhuan-lian-biao-lcof/)
+
+# 方法一：辅助栈
+
+使用一个栈 s，将链表的节点从头到尾依次压入 s 中。全部压入后，然后将 s 中的元素弹出，按弹出的顺序追加链表节点即可。
+
+**代码：**
+
+```java
+public ListNode reverseList(ListNode head) {
+    if (head == null) {
+        return null;
+    }
+    Deque<ListNode> stack = new LinkedList<>();
+    while (head != null) {
+        stack.push(head);
+        head = head.next;
+    }
+    ListNode dummy = new ListNode();
+    ListNode p = dummy;
+    while (!stack.isEmpty()) {
+        ListNode node = stack.pop();
+        node.next = null;
+        p.next = node;
+        p = p.next;
+    }
+    return dummy.next;
+}
+```
+
+**复杂度分析**
+
+- **时间复杂度$O(N)$**：$N$ 是链表的节点个数，栈的 压入和弹出都是 $O(1)$ 时间，链表的追加也是 $O(1)$。
+- **空间复杂度$O(N)$**：$N$ 是链表的节点个数，链表的全部节点需要压入栈中。 
+
+
+
+# 方法二：头插法
+
+头插法的特点是，先插入的节点，会被慢慢地排挤到尾部。
+
+**代码：**
+
+```java
+public ListNode reverseList(ListNode head) {
+    if (head == null) {
+        return null;
+    }
+    ListNode ans = new ListNode(-1);
+    while (head != null) {
+        ListNode tmp = head;
+        head = head.next;
+        tmp.next = ans.next;
+        ans.next = tmp;
+    }
+    return ans.next;
+}
+```
+
+**复杂度分析**
+
+- **时间复杂度$O(N)$**：$N$ 为链表的节点个数，每次插入节点都是 $O(1)$ 时间。
+- **空间复杂度$O(1)$**：$ans$ 占用常数大小的额外空间。

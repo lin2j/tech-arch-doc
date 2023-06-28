@@ -1,0 +1,108 @@
+[剑指 Offer 40. 最小的k个数](https://leetcode-cn.com/problems/zui-xiao-de-kge-shu-lcof/)
+
+# 方法一：快速排序
+
+如果要求最小的 $k$ 个数，那么将数组从小到大排序，然后取前 $k$ 个数字就行了。但是因为题目没要求返回的数组是有序的，因此，只要找到最小的 $k$ 个数就行了，不用管元素的顺序。
+
+（以下假设所有的元素不重复，数组名为  $nums$）
+
+这里可以借助快速排序中 $partition$ 操作返回的索引 i 来快速找到第 k 大的元素。假设数组在区间 $[l, r]$ 中，经过 $partition$ 操作返回哨兵索引 $i$，那么
+
+- $[l, i)$  区间内的元素都小于 $nums[i]$；
+- $(i, r]$ 区间内的元素都大于 $nums[i]$；
+
+此时，如果
+
+- $i = k$，那么 $[l, i)$ 区间内的元素就是最小的 $k$ 个数，返回数组的前 $k$ 个数；
+- $i > k$，说明 $k$ 在 $[l, i)$ 区间内，对 $[l, i-1]$ 区间进行快速排序；
+- $i < k$，说明 $k$ 在 $(i, r]$ 区间内，对 $[i+1, r]$ 区间进行快速排序；
+
+循环上述操作，直到找到 $i = k$ 。
+
+**代码：**
+
+```java
+public int[] getLeastNumbers(int[] arr, int k) {
+    // 先排序再取前k个
+    if (k >= arr.length) return arr;
+    return quickSort(arr, 0, arr.length - 1, k);
+}
+
+/**
+ * 使用用快排
+ */
+private int[] quickSort(int[] arr, int l, int r, int k) {
+    int i = l, j = r;
+    while (i < j) {
+        while (i < j && arr[j] >= arr[l]) j--;
+        while (i < j && arr[i] <= arr[l]) i++;
+        swap(arr, i, j);
+    }
+    swap(arr, i, l);
+    if (i > k) {
+        return quickSort(arr, l, i - 1, k);
+    }
+    if (i < k) {
+        return quickSort(arr, i + 1, r, k);
+    }
+    return Arrays.copyOf(arr, k);
+}
+
+private void swap(int[] arr, int i, int j) {
+    int tmp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = tmp;
+}
+```
+
+**复杂度分析**
+
+- **时间复杂度$O(N)$**：$N$ 为数组的元素数量。每轮递归中，都是根据 $k$ 和 $i$ 的关系选择递归的，由于 $i$ 分布的随机性，则向下递归子数组的平均长度为 $\frac{N}{2}$ 。因此平均情况下，哨兵划分操作一共有 $N$ + $\frac{N}{2}$ + $\frac{N}{4}$ + $\frac{N}{8}$ + ... + $\frac{N}{N}$  = $2N-1$ 。因此时间复杂度为 $O(N)$  。
+
+- **空间复杂度$O(logN)$** ：划分函数的平均递归深度为 $O(logN)$。
+
+
+
+# 方法二：大顶堆
+
+根据大顶堆的特点，父节点比左右子节点都大，因此一个大小为 $k$ 的大顶堆 $maxHeap$ ，其根节点是最大的。
+
+我们先把数组的前 $k$ 个元素插入到 $maxHeap$ 中，然后接下来的元素，不断地跟 $maxHeap$ 根节点对对比，如果比 根节点小，那么就把根节点弹出，然后把新的元素插入到 $maxHeap$ 中，直到所有元素都遍历了。$maxHeap$ 中的元素就是最小的 $k$ 个数。
+
+**代码：**
+
+```java
+public int[] getLeastNumbers(int[] arr, int k) {
+	return priority(arr, k);
+}
+
+/**
+ * 试用大顶堆，存放前 k 个最小数
+ */
+private int[] priority(int[] arr, int k) {
+    if (arr == null || k <= 0) {
+        return new int[]{};
+    }
+    PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Comparator.comparingInt(x -> (int) x).reversed());
+    for (int i = 0; i < k; i++) {
+        maxHeap.offer(arr[i]);
+    }
+    for (int i = k; i < arr.length; i++) {
+        if (maxHeap.peek() > arr[i]) {
+            maxHeap.poll();
+            maxHeap.offer(arr[i]);
+        }
+    }
+    int[] ans = new int[maxHeap.size()];
+    int i = 0;
+    while (!maxHeap.isEmpty()) {
+        ans[i++] = maxHeap.poll();
+    }
+    return ans;
+}
+```
+
+**复杂度分析**
+
+- **时间复杂度$O(NlogK)$**：$N$ 为数组中的元素个数，$K$ 为大顶堆的大小。最坏情况下需要对每个元素都进行入堆，每次入堆的时间为 $O(logK)$ 。
+- **空间复杂度$O(K)$**：$K$ 为输入参数 $k$ 的大小。大顶堆需要占用空间 $O(K)$。

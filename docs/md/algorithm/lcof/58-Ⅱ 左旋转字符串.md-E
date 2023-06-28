@@ -1,0 +1,73 @@
+[剑指 Offer 58 - II. 左旋转字符串](https://leetcode-cn.com/problems/zuo-xuan-zhuan-zi-fu-chuan-lcof/)
+
+# 方法一：库函数
+
+拿出字符串 $[n, len(s)-1]$ 部分和 $[0, n-1]$ 部分，直接交换即可。
+
+**代码：**
+
+```java
+public String reverseLeftWords(String s, int n) {
+    if (s == null || n <= 0 || s.length() <= n) {
+        return s;
+    }
+    return s.substring(n) + s.substring(0, n);
+}
+```
+
+
+
+# 方法二：交换
+
+把字符串转成数组，先交换数组的 $[0, n-1]$ 部分，在交换数组的 $[n, len(s)-1]$ 部分，最后整体 $[0, len(s)-1]$ 再交换。
+
+```java
+public String reverseLeftWords(String s, int n) {
+    if (s == null || n <= 0 || s.length() <= n) {
+        return s;
+    }
+    char[] chars = s.toCharArray();
+    reverse(chars, 0, n - 1);
+    reverse(chars, n, chars.length - 1);
+    reverse(chars, 0, chars.length - 1);
+    return new String(chars);
+}
+
+private void reverse(char[] chars, int l, int r) {
+    while (l < r) {
+        swap(chars, l, r);
+        l++;
+        r--;
+    }
+}
+
+private void swap(char[] chars, int i, int j) {
+    char tmp = chars[i];
+    chars[i] = chars[j];
+    chars[j] = tmp;
+}
+```
+
+**复杂度分析**
+
+- **时间复杂度$O(N)$**：$N$ 为字符串的长度。最差情况下，每个元素都需要交换两次，由 $2N$ 次交换操作，最终时间复杂度为 $O(N)$。
+- **空间复杂度$O(N)$**：Java 中的字符串是不可变的，需要将字符串转成字符数组才能做交换操作。
+
+
+
+# 方法三：取余
+
+**代码：**
+
+```java
+public String reverseLeftWords(String s, int n) {
+    StringBuilder ans = new StringBuilder();
+    int len = n + s.length();
+    for (int i = n; i < len; i++) {
+        // 巧妙使用取余操作
+        ans.append(s.charAt(i % s.length()));
+    }
+    return ans.toString();
+}
+```
+

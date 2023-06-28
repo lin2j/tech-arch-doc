@@ -1,0 +1,75 @@
+[剑指 Offer 03. 数组中重复的数字](https://leetcode-cn.com/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof/)
+
+# 方法一：使用集合
+
+遍历数组，对于每个数字，先判断集合中是否有该数字，如果没有则存入集合中，如果已经存在了，那么该数字就为重复的数字。
+
+**代码：**
+
+```java
+public int findRepeatNumber(int[] nums) {
+    if (nums == null || nums.length == 1) {
+        return -1;
+    }
+    Set<Integer> set = new HashSet<>();
+    for (Integer n : nums) {
+        if (set.contains(n)) {
+            return n;
+        } else {
+            set.add(n);
+        }
+    }
+    return -1;
+}
+```
+
+**复杂度分析**
+
+- **时间复杂度$O(N)$**：最坏的情况下，需要进行 $N$ 次循环，HashSet 的添加和查找都是 $O(1)$ 的。
+
+- **-空间复杂度$O(N)$**：HashSet 占用 $O(N)$ 大小的空间。
+
+
+
+# 方法二：原地交换
+
+题目中说明了这个长度为 $N$ 的数组中的数字的范围在 $[0, N-1$ 中，因此假如每个数字都是唯一的，那么必定会有 $nums[i] = i$ 。
+
+现在题目中说明了有数字重复了，那么我们在遍历数组的时候，遍历到数字 $a$ 时，将 $a$ 交换到索引 $a$ 处，此时有 $nums[a] = a$ ​。那么第二次遇到数字  $a$  时，一定有 $nums[a] = a$ 了，所以 $a$ 一定是重复的数字。
+
+算法流程：
+
+1. 遍历数组 $nums$，初始索引位置 $i = 0$。
+   1. 若 $nums[i] = i$ ：说明 $nums[i]$  已经在对应索引位置上了，无需交换。
+   2. 若 $nums[nums[i]] = nums[i]$ ：说明 $nums[i]$​ 处和索引 $i$ 处的元素值都为 $nums[i]$ ，那么 $nums[i]$ 就是一个重复的数字，返回值 $nums[i]$ 。
+   3. 否则，交换索引 $i$ 和 $nums[i]$ 的元素值，将此数字交换至对应索引位置。
+2. 若遍历完尚未返回，则返回 $-1$。
+
+**代码：**
+
+```java
+public int findRepeatNumber(int[] nums) {
+    if (nums == null || nums.length == 1) {
+        return -1;
+    }
+    for(int i = 0; i < nums.length; i++) {
+        if(nums[i] == i) {
+            continue;
+        }
+        if(nums[nums[i]] == nums[i]) {
+            return nums[i];
+        }
+        int tmp = nums[nums[i]];
+        nums[nums[i]] = nums[i];
+        nums[i] = tmp;
+    }
+    return -1;
+}
+```
+
+**复杂度分析**
+
+- **时间复杂度 $O(N)$：** 需要循环 $N$ 遍，每轮的判断和交换操作是 $O(1)$。
+
+- **空间复杂度 $O(1)$：** 使用常数级的空间。
+

@@ -1,0 +1,54 @@
+[[剑指 Offer 09. 用两个栈实现队列](https://leetcode-cn.com/problems/yong-liang-ge-zhan-shi-xian-dui-lie-lcof/)]
+
+**解题思路：**
+
+使用两个栈，可以实现一个队列。
+
+假设有两个栈，一个栈是 $S1$，一个是 $S2$。
+
+**入队操作**
+
+直接向 $S1$ 压入数据。
+
+**出队操作**
+
+因为队列是先进先出，如果直接从 $S1$ 弹出数据显然不对，我们要的是 $S1$ 最底下的元素。
+
+因此我们先把 $S1$ 的元素全部弹出并压入 $S2$，这样 $S2$ 的栈顶就是要**出队**的元素。只要 $S2$ 不为空，那么它的栈顶就应该是要出队的数据。
+
+出队时，先判断 $S2$ 是否为空，不为空则弹出栈顶。如果为空，则回到原始状态，将 $S1$ 的元素压入 $S2$。
+
+需要注意的是，一定要 $S2$ 为空的时候，才能把 $S1$ 的数据弹出并压入到 $S2$。
+
+**代码：**
+
+```java
+class CQueue {
+    Deque<Integer> s1 = new LinkedList<>();
+    Deque<Integer> s2 = new LinkedList<>();
+
+    public CQueue() {
+
+    }
+
+    public void appendTail(int value) {
+        s1.push(value);
+    }
+
+    public int deleteHead() {
+        if(!s2.isEmpty()){
+            return s2.pop();
+        }
+        while(!s1.isEmpty()){
+            s2.push(s1.poll());
+        }
+        return s2.isEmpty() ? -1 : s2.pop();
+    }
+}
+```
+
+**复杂度分析**
+
+- **时间复杂度**：`appendTail`  函数为 $O(1)$ ，`deleteHead` 在 $N$ 次删除队首元素后，需要进行 $N$ 个元素的倒序，为$O(N)$ 。
+
+- **空间复杂度$O(N)$**：最差的情况下，$S1$ 和 $S2$ 共保存 $N$ 个元素。

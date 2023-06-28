@@ -1,0 +1,71 @@
+[剑指 Offer 13. 机器人的运动范围](https://leetcode-cn.com/problems/ji-qi-ren-de-yun-dong-fan-wei-lcof/)
+
+**解题思路：**
+
+可以使用**深度优先搜索**和**剪枝法**来做。
+
+- **深度优先搜索**：通过递归，往一个方向一直搜索下去，统计格子数，如果格子不符合要求，则结束递归。然后往另一个方向进行搜索。
+- **剪枝法**：当发现某个各自不符合要求时，就可以提前结束递归。
+
+
+
+**DFS 函数**
+
+**递归参数**：当前格子位置 $(x, y)$ 、整个方格的边界 $(m, n)$、数位和限制 $k$、方格遍历统计数组 $visited$。
+
+**终止条件**：$x$ 或者 $y$ 越界、或者方格已经遍历过、或者 $x$ 和 $y$ 的数位和大于 $k$。
+
+**递推工作**：
+
+- 将 $visted[x][y]$ 置为 $true$，表示已经遍历过。
+- 可达到格子数 $count$ 加一。
+- 搜索下一个单元格，往**右、下**方向搜索。
+
+**代码：**
+
+```java
+int ans = 0;
+public int movingCount(int m, int n, int k) {
+    boolean[][] visited = new boolean[m][n];
+    move(m, n, 0, 0, k, visited);
+    return ans;
+}
+
+private void move(int m, int n, int x, int y, int k, boolean[][] visited){
+    // 注意参数边界判断
+    if(x >= m || y >= n || x < 0 || y < 0
+            || visited[x][y] || !valid(x, y, k)){
+        return ;
+    }
+    visited[x][y] = true;
+    ans++;
+    move(m, n, x+1, y, k, visited);
+    move(m, n, x, y+1, k, visited);
+}
+
+/**
+ * 判断 x 和 y 的数位和符合要求
+ * @return 符合返回 true，否则返回 false
+ */
+private boolean valid(int x, int y, int k){
+    return k >= (sumOfDigital(x) + sumOfDigital(y));
+}
+
+/**
+ * 计算数位和
+ */
+private int sumOfDigital(int n){
+    int sum = 0;
+    while(n != 0){
+        sum += n % 10;
+        n /= 10;
+    }
+    return sum;
+}
+```
+
+**复杂度分析**
+
+- **时间复杂度 $O(MN)$**：最多只需要遍历 $MN$ 个方格。
+- **空间复杂度 $O(MN)$**：需要辅助数组 $visited$ ，空间为 $O(MN)$。
+

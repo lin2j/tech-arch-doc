@@ -1,0 +1,51 @@
+[剑指 Offer 32 - III. 从上到下打印二叉树 III](https://leetcode-cn.com/problems/cong-shang-dao-xia-da-yin-er-cha-shu-iii-lcof/)
+
+**解题思路：**
+
+这种打印方式类似于 ”之“ 字型打印，第一层从左向右打印，第二层从右向左打印……因此，可以在普通的层序遍历的基础上，增加一个标志 $leftToRight$，用来表示当前层数应该从左向右还是从右向左。
+
+创建一个与当前层数的节点数相同大小的数组 $arr$ 用来存放节点的值，当 $leftToRight$ 为
+
+- $true$：当前层数要从左向右打印，将当前层数的节点值按照从索引 $0$ 位置开始到 $len(arr)-1$ 存放。
+- $false$：当前层数要从右向左打印，将当前层数的节点值按照从索引 $len(arr)-1$ 位置开始到 $0$ 存放。
+
+每一层遍历后，将 $leftToRight$ 反转一下。
+
+> 当然后也可以不借助 $leftToRight$ 。使用双端队列，可以判断当前层数是奇数层还是偶数层，然后决定取队头元素还是队尾元素。
+
+**代码：**
+
+```java
+public List<List<Integer>> levelOrder(TreeNode root) {
+    List<List<Integer>> ans = new ArrayList<>();
+    Deque<TreeNode> queue = new LinkedList<>();
+    if (root != null) {
+        queue.offer(root);
+    }
+    boolean leftToRight = true;
+    while (!queue.isEmpty()) {
+        int levelSize = queue.size();
+        Integer[] arr = new Integer[levelSize];
+        for (int i = 0; i < levelSize; i++) {
+            TreeNode node = queue.poll();
+            int idx = leftToRight ? i : levelSize - i - 1;
+            arr[idx] = node.val;
+            if (node.left != null) {
+                queue.offer(node.left);
+            }
+            if (node.right != null) {
+                queue.offer(node.right);
+            }
+        }
+        leftToRight = !leftToRight;
+        ans.add(Arrays.asList(arr));
+    }
+    return ans;
+}
+```
+
+**复杂度分析**
+
+- **时间复杂度$O(N)$**：$N$ 为树的节点总数。
+- **空间复杂度$O(N)$**：$N$ 为树的节点总数。最差情况下，即当树为平衡二叉树时，最多有 $\frac{N}{2}$ 个树节点**同时**在 $queue$ 中，使用 $O(N)$ 大小的额外空间。
+  - 在每一次 while 循环后，$arr$ 数组就被销毁回收了，因此没有考虑 $arr$ 的空间占用。

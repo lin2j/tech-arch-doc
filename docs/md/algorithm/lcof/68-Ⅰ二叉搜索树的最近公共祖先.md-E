@@ -1,0 +1,32 @@
+[剑指 Offer 68 - I. 二叉搜索树的最近公共祖先](https://leetcode-cn.com/problems/er-cha-sou-suo-shu-de-zui-jin-gong-gong-zu-xian-lcof/)
+
+**解题思路：**
+
+根据二叉搜索树的特殊性，对于父节点 x 可以有以下的结论
+
+- 如果 $x$ 的节点值比 $p$，$q$ 的都小，说明 $p$，$q$ 的最近公共祖先在 x 的左孩子中；
+- 如果 $x$ 的节点值比 $p$，$q$ 的都打，说明 $p$，$q$ 的最近公共祖先在 x 的右孩子中；
+- 如果 $x$ 的节点值比 $p$， $q$ 其中一个大，比另一个小，说明 $x$ 就是 $p$，$q$ 的公共祖先，$p$，$q$ 是 $x$ 这里分开的。
+
+**代码：**
+
+```java
+public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+    TreeNode ancestor = root;
+    while(true) {
+        if(ancestor.val > p.val && ancestor.val > q.val) {
+            ancestor = ancestor.left;
+        } else if(ancestor.val < p.val && ancestor.val < q.val) {
+            ancestor = ancestor.right;
+        } else {
+            break;
+        }
+    }
+    return ancestor;
+}
+```
+
+**复杂度分析**
+
+- **时间复杂度$O(N)$**：$N$ 为树的节点个数。最差情况下，树退化成链表，需要遍历所有的节点。
+- **空间复杂度$O(1)$**：辅助变量占用常数大小的额外空间。
