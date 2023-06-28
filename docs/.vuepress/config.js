@@ -51,15 +51,10 @@ export default {
         navbar: [
             { text: "首页", link: "/" },
             {
-                text: "中间件",
+                text: "Java",
                 children: [
-                    {
-                        text: "消息中间件",
-                        children: [
-                            {text: "Kafka 系列", link: "/md/middleware/kafka/Kafka系列一消息队列.md"}
-                        ]
-                    }
-                ]
+                    
+                ],
             },
             {
                 text: "算法",
@@ -68,6 +63,17 @@ export default {
                         text: "算法题解",
                         children: [
                             {text: "剑指 Offer", link: "/md/algorithm/lcof/03 数组中重复的数字.md"}
+                        ]
+                    }
+                ]
+            },
+            {
+                text: "中间件",
+                children: [
+                    {
+                        text: "消息中间件",
+                        children: [
+                            {text: "Kafka 系列", link: "/md/middleware/kafka/Kafka系列一消息队列.md"}
                         ]
                     }
                 ]

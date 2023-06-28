@@ -6,7 +6,7 @@
 
 首先有两个栈 $S1$ 和 $S2$，$S1$负责存储压入和弹出所有元素，$S2$ 负责保存当前元素中的最小值。下面通过一个例子来说明，也可以直接看结论。
 
-![30-栈的弹出压入](https://www.lin2j.tech/upload/2021/07/30-%E6%A0%88%E7%9A%84%E5%BC%B9%E5%87%BA%E5%8E%8B%E5%85%A5-c345b68cbb9d4a6ea71e7720bbcda5d0.png)
+![30-栈的弹出压入](https://www.lin2j.tech/blog-image/algorithm/lcof/30-%E6%A0%88%E7%9A%84%E5%BC%B9%E5%87%BA%E5%8E%8B%E5%85%A5.png)
 
 **压入阶段**
 
