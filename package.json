@@ -6,14 +6,12 @@
   "author": "lin2j <linjinjia047@163.com>",
   "license": "MIT",
   "dependencies": {
-    "vuepress": "^2.0.0-beta.63"
+    "@vuepress/plugin-search": "^2.0.0-beta.63",
+    "vuepress": "^2.0.0-beta.63",
+    "vuepress-plugin-md-enhance": "^2.0.0-beta.228"
   },
   "scripts": {
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs"
-  },
-  "devDependencies": {
-    "@vuepress/plugin-back-to-top": "^2.0.0-beta.63",
-    "@vuepress/plugin-search": "^2.0.0-beta.63"
   }
 }

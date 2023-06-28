@@ -7,7 +7,7 @@ actions:
     type: primary
 features:
   - title: 博学慎思
-    details: 积极学习的同时还要注重思考和反思
+    details: 积极学习的同时也要注重思考和反思
   - title: 构筑体系
     details: 博观而约取，厚积而薄发
   - title: 互助互勉
