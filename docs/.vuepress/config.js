@@ -9,6 +9,7 @@ import { getSideBar4Devops } from './sidebar/devops'
 import { getSideBar4Middleware } from './sidebar/middleware'
 import { getSideBar4Interview } from './sidebar/interview'
 import { getSidebar4Algorithm } from './sidebar/algorithm'
+import { getSidebar4Project } from './sidebar/project'
 
 const description = "包含：Java 基础知识，Java 进阶知识，开发框架，设计模式，数据库，中间件，计算机网络，面试题，算法，部署工具..."
 
@@ -106,6 +107,15 @@ export default {
                 ]
             },
             {
+                text: "项目",
+                children: [
+                    {
+                        text: "项目踩坑",
+                        link:"/md/project/problem/在Mybatis-Plus中指定TypeHandler后不生效的问题与解决办法.md",
+                    }
+                ]
+            },
+            {
                 text: "面试",
                 link: "/md/interview/MySQL.md",
             },
@@ -132,8 +142,9 @@ export default {
             "/md/java/": getSideBar4Java(),
             "/md/devops/": getSideBar4Devops(),
             "/md/middleware/": getSideBar4Middleware(),
-            "/md/interview": getSideBar4Interview(),
-            "/md/algorithm": getSidebar4Algorithm()
+            "/md/interview/": getSideBar4Interview(),
+            "/md/algorithm/": getSidebar4Algorithm(),
+            "/md/project/": getSidebar4Project(),
         }
     })
 }
