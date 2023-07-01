@@ -1,15 +1,15 @@
-import { searchPlugin } from '@vuepress/plugin-search'
-import { mdEnhancePlugin } from 'vuepress-plugin-md-enhance'
-import { palettePlugin } from '@vuepress/plugin-palette'
+import {searchPlugin} from '@vuepress/plugin-search'
+import {mdEnhancePlugin} from 'vuepress-plugin-md-enhance'
+import {palettePlugin} from '@vuepress/plugin-palette'
 
-import { defaultTheme } from 'vuepress'
+import {defaultTheme} from 'vuepress'
 
-import { getSideBar4Java } from './sidebar/java' 
-import { getSideBar4Devops } from './sidebar/devops'
-import { getSideBar4Middleware } from './sidebar/middleware'
-import { getSideBar4Interview } from './sidebar/interview'
-import { getSidebar4Algorithm } from './sidebar/algorithm'
-import { getSidebar4Project } from './sidebar/project'
+import {getSideBar4Java} from './sidebar/java'
+import {getSideBar4Devops} from './sidebar/devops'
+import {getSideBar4Middleware} from './sidebar/middleware'
+import {getSideBar4Interview} from './sidebar/interview'
+import {getSidebar4Algorithm} from './sidebar/algorithm'
+import {getSidebar4Project} from './sidebar/project'
 
 const description = "包含：Java 基础知识，Java 进阶知识，开发框架，设计模式，数据库，中间件，计算机网络，面试题，算法，部署工具..."
 
@@ -52,7 +52,7 @@ export default {
     theme: defaultTheme({
         displayAllHeaders: false,
         navbar: [
-            { text: "首页", link: "/" },
+            {text: "首页", link: "/"},
             {
                 text: "Java",
                 children: [
@@ -79,6 +79,19 @@ export default {
                             {
                                 text: "JVM 类加载机制",
                                 link: "/md/java/jvm/JVM 类加载机制.md"
+                            }
+                        ]
+                    },
+                    {
+                        text: "Java 并发",
+                        children: [
+                            {
+                                text: "Java 并发基础知识",
+                                link: "/md/java/thread/Java 线程池：基础知识.md"
+                            },
+                            {
+                                text: "思考与验证",
+                                link: "/md/java/thread/think/浅谈synchronized和ReentrantLock的区别.md"
                             }
                         ]
                     }
@@ -111,7 +124,7 @@ export default {
                 children: [
                     {
                         text: "项目踩坑",
-                        link:"/md/project/problem/在Mybatis-Plus中指定TypeHandler后不生效的问题与解决办法.md",
+                        link: "/md/project/problem/在Mybatis-Plus中指定TypeHandler后不生效的问题与解决办法.md",
                     }
                 ]
             },
@@ -122,8 +135,8 @@ export default {
             {
                 text: "工具｜部署",
                 children: [
-                    { 
-                        text: "IntelliJ", 
+                    {
+                        text: "IntelliJ",
                         children: [
                             {text: "实用插件推荐", link: "/md/devops/intellij/recommoned/禁用非必需插件，让 IDE 飞起.md"},
                             {text: "插件开发", link: "/md/devops/intellij/plugin/Simple Deployment.md"}

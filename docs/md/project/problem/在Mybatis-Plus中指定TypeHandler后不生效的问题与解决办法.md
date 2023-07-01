@@ -2,7 +2,7 @@
 
 在 `Mybatis-Plus` 中为字段指定 `TypeHandler` 之后，`TypeHandler` 只在插入时生效，更新或者查询时未生效。
 
-```
+```java
 /**
 * 设备IP
 */

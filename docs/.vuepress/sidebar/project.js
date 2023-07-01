@@ -69,6 +69,11 @@ function __getSidebar4Project() {
                     text:"如何解决逻辑删除与唯一索引冲突",
                     link:"/md/project/problem/如何解决逻辑删除与唯一索引冲突.md",
                     collapsible:false
+                },
+                {
+                    text:"Excel 中日期转换成数值的 Java 代码实现",
+                    link:"/md/project/problem/Excel 中日期转换成数值的 Java 代码实现.md",
+                    collapsible:false
                 }
             ]
         }
