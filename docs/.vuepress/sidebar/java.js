@@ -14,6 +14,11 @@ function __getSideBar4Java() {
                     text: "Java 注解",
                     link: "/md/java/basic/Java 注解.md",
                     collapsible: false
+                },
+                {
+                    text: "Java SPI 机制",
+                    link: "/md/java/basic/Java SPI 机制.md",
+                    collapsible: false
                 }
             ]
         },

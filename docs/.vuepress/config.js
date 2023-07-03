@@ -66,6 +66,10 @@ export default {
                             {
                                 text: "Java 注解",
                                 link: "/md/java/basic/Java 注解.md"
+                            },
+                            {
+                                text: "Java SPI 机制",
+                                link: "/md/java/basic/Java SPI 机制.md"
                             }
                         ]
                     },
