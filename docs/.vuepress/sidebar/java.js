@@ -6,12 +6,17 @@ function __getSideBar4Java() {
             sidebarDepth: 0,
             children: [
                 {
-                    text: "Java 反射",
+                    text: "Java 异常机制",
+                    link: "/md/java/basic/Java 异常机制.md",
+                    collapsible: false
+                },
+                {
+                    text: "Java 反射机制",
                     link: "/md/java/basic/Java 反射.md",
                     collapsible: false
                 },
                 {
-                    text: "Java 注解",
+                    text: "Java 注解机制",
                     link: "/md/java/basic/Java 注解.md",
                     collapsible: false
                 },
