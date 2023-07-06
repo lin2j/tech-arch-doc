@@ -14,8 +14,8 @@ import {getSidebar4Project} from './sidebar/project'
 const description = "包含：Java 基础知识，Java 进阶知识，开发框架，设计模式，数据库，中间件，计算机网络，面试题，算法，部署工具..."
 
 export default {
-    // Byte Lab 该名称强调对计算机底层原理和字节级别操作的关注，并暗示了对技术的深入探索和实验的态度。
-    title: 'Byte Lab',
+    // 暗示在开发领域中，像艺术家一样精心创造代码和解决方案
+    title: 'ByteCraft',
     description: description,
     plugins: [
         searchPlugin({}),
@@ -27,7 +27,7 @@ export default {
     locales: {
         "/": {
             lang: "zh-CN",
-            title: "Byte Lab",
+            title: "ByteCraft",
             description: description
         }
     },
