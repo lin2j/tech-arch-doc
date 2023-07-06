@@ -60,6 +60,10 @@ export default {
                         text: "Java 基础知识",
                         children: [
                             {
+                                text: "Java 泛型机制",
+                                link: "/md/java/basic/Java 泛型.md"
+                            },
+                            {
                                 text: "Java 异常机制",
                                 link: "/md/java/basic/Java 异常机制.md"
                             },
