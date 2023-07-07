@@ -86,19 +86,6 @@ export default {
                         ]
                     },
                     {
-                        text: "Java 虚拟机",
-                        children: [
-                            {
-                                text: "JVM 内存结构",
-                                link: "/md/java/jvm/JVM 内存结构.md"
-                            },
-                            {
-                                text: "JVM 类加载机制",
-                                link: "/md/java/jvm/JVM 类加载机制.md"
-                            }
-                        ]
-                    },
-                    {
                         text: "Java 并发",
                         children: [
                             {
@@ -114,7 +101,20 @@ export default {
                                 link: "/md/java/thread/think/浅谈synchronized和ReentrantLock的区别.md"
                             }
                         ]
-                    }
+                    },
+                    {
+                        text: "Java 虚拟机",
+                        children: [
+                            {
+                                text: "JVM 内存结构",
+                                link: "/md/java/jvm/JVM 内存结构.md"
+                            },
+                            {
+                                text: "JVM 类加载机制",
+                                link: "/md/java/jvm/JVM 类加载机制.md"
+                            }
+                        ]
+                    },
                 ],
             },
             {
