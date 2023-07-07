@@ -20,6 +20,10 @@ export default {
     plugins: [
         searchPlugin({}),
         mdEnhancePlugin({
+            // 启用幻灯片
+            presentation: true,
+            // 代码分 tab
+            codetabs: true,
             katex: true
         }),
         palettePlugin({})
@@ -98,7 +102,11 @@ export default {
                         text: "Java 并发",
                         children: [
                             {
-                                text: "Java 并发基础知识",
+                                text: "Java 并发 - 线程基础",
+                                link: "/md/java/thread/Java 并发 线程基础.md"
+                            },
+                            {
+                                text: "Java 并发 - 线程池基础",
                                 link: "/md/java/thread/Java 线程池：基础知识.md"
                             },
                             {
