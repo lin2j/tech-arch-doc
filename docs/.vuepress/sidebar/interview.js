@@ -7,12 +7,12 @@ function __getSideBar4Interview() {
             children: [
                 {
                     text: "数据库系列 - MySQL 基础问答",
-                    link: "/md/interview/MySQL.md",
+                    link: "/md/interview/MySQL.html",
                     collasible: false,
                 },
                 {
                     text: "数据库系列 - Redis 基础问答",
-                    link: "/md/interview/Redis.md",
+                    link: "/md/interview/Redis.html",
                     collasible: false,
                 },
             ]

@@ -3,7 +3,7 @@ home: true
 heroImage: /image/logo.png
 actions:
   - text: 快速开始 →
-    link: /md/middleware/kafka/Kafka系列一消息队列.md
+    link: /md/middleware/kafka/Kafka系列一消息队列.html
     type: primary
 features:
   - title: 博学慎思

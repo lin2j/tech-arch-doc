@@ -1,6 +1,6 @@
-import {searchPlugin} from '@vuepress/plugin-search'
 import {mdEnhancePlugin} from 'vuepress-plugin-md-enhance'
 import {palettePlugin} from '@vuepress/plugin-palette'
+import {docsearchPlugin} from '@vuepress/plugin-docsearch'
 
 import {defaultTheme} from 'vuepress'
 
@@ -18,7 +18,6 @@ export default {
     title: 'ByteCraft',
     description: description,
     plugins: [
-        searchPlugin({}),
         mdEnhancePlugin({
             // 启用幻灯片
             presentation: true,
@@ -26,7 +25,22 @@ export default {
             codetabs: true,
             katex: true
         }),
-        palettePlugin({})
+        palettePlugin({}),
+        docsearchPlugin({
+            appId: 'VK082AIGRQ',
+            apiKey: 'b3444a55c45437a501ea99689c5beae3',
+            indexName: 'lin2j',
+            locales: {
+                '/': {
+                    placeholder: '搜索文档',
+                    translations: {
+                    button: {
+                        buttonText: '搜索文档',
+                        },
+                    },
+                },
+            }
+        })
     ],
     locales: {
         "/": {
@@ -65,23 +79,23 @@ export default {
                         children: [
                             {
                                 text: "Java 泛型机制",
-                                link: "/md/java/basic/Java 泛型.md"
+                                link: "/md/java/basic/Java 泛型.html"
                             },
                             {
                                 text: "Java 异常机制",
-                                link: "/md/java/basic/Java 异常机制.md"
+                                link: "/md/java/basic/Java 异常机制.html"
                             },
                             {
                                 text: "Java 反射机制",
-                                link: "/md/java/basic/Java 反射.md"
+                                link: "/md/java/basic/Java 反射.html"
                             },
                             {
                                 text: "Java 注解机制",
-                                link: "/md/java/basic/Java 注解.md"
+                                link: "/md/java/basic/Java 注解.html"
                             },
                             {
                                 text: "Java SPI 机制",
-                                link: "/md/java/basic/Java SPI 机制.md"
+                                link: "/md/java/basic/Java SPI 机制.html"
                             }
                         ]
                     },
@@ -90,15 +104,15 @@ export default {
                         children: [
                             {
                                 text: "Java 并发 - 线程基础",
-                                link: "/md/java/thread/Java 并发 线程基础.md"
+                                link: "/md/java/thread/Java 并发 线程基础.html"
                             },
                             {
                                 text: "Java 并发 - 线程池基础",
-                                link: "/md/java/thread/Java 线程池：基础知识.md"
+                                link: "/md/java/thread/Java 线程池：基础知识.html"
                             },
                             {
                                 text: "思考与验证",
-                                link: "/md/java/thread/think/浅谈synchronized和ReentrantLock的区别.md"
+                                link: "/md/java/thread/think/浅谈synchronized和ReentrantLock的区别.html"
                             }
                         ]
                     },
@@ -107,11 +121,11 @@ export default {
                         children: [
                             {
                                 text: "JVM 内存结构",
-                                link: "/md/java/jvm/JVM 内存结构.md"
+                                link: "/md/java/jvm/JVM 内存结构.html"
                             },
                             {
                                 text: "JVM 类加载机制",
-                                link: "/md/java/jvm/JVM 类加载机制.md"
+                                link: "/md/java/jvm/JVM 类加载机制.html"
                             }
                         ]
                     },
@@ -123,7 +137,7 @@ export default {
                     {
                         text: "算法题解",
                         children: [
-                            {text: "剑指 Offer", link: "/md/algorithm/lcof/03 数组中重复的数字.md"}
+                            {text: "剑指 Offer", link: "/md/algorithm/lcof/03 数组中重复的数字.html"}
                         ]
                     }
                 ]
@@ -134,7 +148,7 @@ export default {
                     {
                         text: "消息中间件",
                         children: [
-                            {text: "Kafka 系列", link: "/md/middleware/kafka/Kafka系列一消息队列.md"}
+                            {text: "Kafka 系列", link: "/md/middleware/kafka/Kafka系列一消息队列.html"}
                         ]
                     }
                 ]
@@ -144,13 +158,13 @@ export default {
                 children: [
                     {
                         text: "项目踩坑",
-                        link: "/md/project/problem/在Mybatis-Plus中指定TypeHandler后不生效的问题与解决办法.md",
+                        link: "/md/project/problem/在Mybatis-Plus中指定TypeHandler后不生效的问题与解决办法.html",
                     }
                 ]
             },
             {
                 text: "面试",
-                link: "/md/interview/MySQL.md",
+                link: "/md/interview/MySQL.html",
             },
             {
                 text: "工具｜部署",
@@ -158,14 +172,14 @@ export default {
                     {
                         text: "IntelliJ",
                         children: [
-                            {text: "实用插件推荐", link: "/md/devops/intellij/recommoned/禁用非必需插件，让 IDE 飞起.md"},
-                            {text: "插件开发", link: "/md/devops/intellij/plugin/Simple Deployment.md"}
+                            {text: "实用插件推荐", link: "/md/devops/intellij/recommoned/禁用非必需插件，让 IDE 飞起.html"},
+                            {text: "插件开发", link: "/md/devops/intellij/plugin/Simple Deployment.html"}
                         ]
                     },
                     {
                         text: "CI & CD",
                         children: [
-                            {text: "Jenkins", link: "/md/devops/tool/Jenkins安装及自动部署.md"}
+                            {text: "Jenkins", link: "/md/devops/tool/Jenkins安装及自动部署.html"}
                         ]
                     }
                 ]
