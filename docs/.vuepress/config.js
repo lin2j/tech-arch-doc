@@ -32,10 +32,10 @@ export default {
             indexName: 'lin2j',
             locales: {
                 '/': {
-                    placeholder: '搜索文档',
+                    placeholder: 'Search',
                     translations: {
                     button: {
-                        buttonText: '搜索文档',
+                        buttonText: 'Search',
                         },
                     },
                 },
@@ -103,12 +103,12 @@ export default {
                         text: "Java 并发",
                         children: [
                             {
-                                text: "Java 并发 - 线程基础",
+                                text: "Java 线程",
                                 link: "/md/java/thread/Java 并发 线程基础.html"
                             },
                             {
-                                text: "Java 并发 - 线程池基础",
-                                link: "/md/java/thread/Java 线程池：基础知识.html"
+                                text: "Java 线程池",
+                                link: "/md/java/thread/Java 线程池 ThreadPoolExecutor 详解.html"
                             },
                             {
                                 text: "思考与验证",

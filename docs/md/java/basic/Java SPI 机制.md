@@ -1,3 +1,7 @@
+---
+title: Java SPI 机制
+---
+
 # 什么是 SPI 机制
 
 SPI （Service Provider Interface）是 Java 内置的一种**服务提供**发现机制，将功能的实现交给第三方，用来拓展和替换组件。

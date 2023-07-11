@@ -38,19 +38,14 @@ function __getSideBar4Java() {
             sidebarDepth: 0,
             children: [
                 {
-                    text: "Java 并发 - 线程基础",
+                    text: "线程基础",
                     link: "/md/java/thread/Java 并发 线程基础.html"
                 },
                 {
-                    text: "Java 并发 - 线程池基础",
-                    link: "/md/java/thread/Java 线程池：基础知识.html",
+                    text: "线程池 ThreadPoolExecutor 详解",
+                    link: "/md/java/thread/Java 线程池 ThreadPoolExecutor 详解.html",
                     collapsible: false
-                },
-                {
-                    text: "Java 线程池：拒绝策略详解",
-                    link: "/md/java/thread/Java 线程池：拒绝策略详解.html",
-                    collapsible: false
-                },
+                }
             ]
         },
         {
