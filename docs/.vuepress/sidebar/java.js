@@ -42,6 +42,11 @@ function __getSideBar4Java() {
                     link: "/md/java/thread/Java 并发 线程基础.html"
                 },
                 {
+                    text: "JUC 锁 LockSupport 详解",
+                    link: "/md/java/thread/JUC 锁 LockSupport 详解.html",
+                    collapsible: false
+                },
+                {
                     text: "线程池 Future & FutureTask 详解",
                     link: "/md/java/thread/Java 线程池 FutureTask 详解.html",
                     collapsible: false
