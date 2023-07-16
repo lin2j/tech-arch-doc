@@ -360,9 +360,9 @@ private static final int TERMINATED =  3 << COUNT_BITS;
 
 # 线程池的任务执行
 
-开始之前，讲一下 Woker 内部类的情况。
+开始之前，讲一下 Woker 内部类的情况。Woker 是 ThreadPoolExecutor 的内部类，既充当工作线程的角色，又是一个可执行的任务。
 
-- Woker 类继承了 AQS 以实现锁功能，可以通过加锁、解锁来协调执行任务与线程池中断之间的控制。
+- Woker 类继承了 AQS 以实现锁功能，可以通过加锁、解锁来协调执行任务与线程池中断之间的控制。比如工作线程的中断、任务的运行之前都会先加锁，再执行动作，最后解锁。
 - Woker 实现了 Runnable 接口，在创建线程时，是将 Worker 本身传递给 Thread 的，因此调用 `Thread.start()` 的时候会调用 Worker 的 `run()` 方法。
 
 ```java
@@ -385,7 +385,7 @@ private final class Worker extends AbstractQueuedSynchronizer implements Runnabl
 
 线程池执行任务的步骤为 `execute() --> addWorker() --> runWorker() --> getTask() --> run()`
 
-1. 当调用线程池的 `executed()` 或者 `submit()` 方法执行任务时，线程池会先判断是否需要添加新的工作线程，来决定要不要调用 `addWorker()` 方法增加新的工作线程。如果没有新增工作线程，则将任务放到任务队列之中。
+1. 当调用线程池的 `execute()` 或者 `submit()` 方法执行任务时，线程池会先判断是否需要添加新的工作线程，来决定要不要调用 `addWorker()` 方法增加新的工作线程。如果没有新增工作线程，则将任务放到任务队列之中。
 
 2. `addWorker()` 方法在 ReentrantLock 的帮助下，将新增的 Woker 添加到 `workers` 工作线程集合之中，然后将 Woker 之中的线程启动，当 thread 调用 `start()` 方法时，接着会调用 Worker 的 `run()` 方法，进而执行 `runWoker()` 方法。
 
@@ -416,7 +416,7 @@ public void execute(Runnable command) {
     // 在线程池处于 RUNING 状态下，如果核心线程不能新增，则将新的任务放到任务队列
     if (isRunning(c) && workQueue.offer(command)) {
         int recheck = ctl.get();
-        // 这里对线程池的状态进行二次检查，因为从进入到这个方法到现在，
+        // 这里对线程池的状态进行二次检查，因为从上一次 isRunning 判断到现在，
         // 在多线程的环境下可能线程池已经处于非 RUNNING 状态
         // 非 RUNNING 状态下，不会接受新的任务，所以把任务从任务队列删除
         if (! isRunning(recheck) && remove(command))
@@ -526,20 +526,20 @@ private boolean addWorker(Runnable firstTask, boolean core) {
 /**
  * 回退工作线程的创建
  * - 如果 w 不为 null，则从工作线程集合中移除
- * - 减少工作线程数亩
+ * - 减少工作线程数目
  * - 重新检查终止状态，以防止因为 Woker 线程导致阻碍了线程池的终止
  */
 private void addWorkerFailed(Worker w) {
-  final ReentrantLock mainLock = this.mainLock;
-  mainLock.lock();
-  try {
-    if (w != null)
-      workers.remove(w);
-    decrementWorkerCount();
-    tryTerminate();
-  } finally {
-    mainLock.unlock();
-  }
+    final ReentrantLock mainLock = this.mainLock;
+    mainLock.lock();
+    try {
+        if (w != null)
+             workers.remove(w);
+        decrementWorkerCount();
+        tryTerminate();
+    } finally {
+        mainLock.unlock();
+    }
 }
 ```
 
@@ -618,11 +618,14 @@ final void runWorker(Worker w) {
  * 阻塞或者超时等待获取任务，取决于当前的线程池配置。
  * 以下情况会返回 null
  * 1. 该工作线程不是核心线程，即当前线程数量超过核心线程数 corePoolSize
+ *    获取超时
  * 2. 线程池处于 STOP 状态
  * 3. 线程池处于 SHUTDOWN 状态，并且队列已经空了
  * 4. 超时等待
  *    4.1 allowCoreThreadTimeOut 设置为 true 表示核心线程获取任务也会超时
  *    4.2 或者当前线程是非核心线程
+ * 
+ * return null 会导致工作线程退出
  */
 private Runnable getTask() {
     boolean timedOut = false; // Did the last poll() time out?
@@ -631,8 +634,10 @@ private Runnable getTask() {
         int c = ctl.get();
         int rs = runStateOf(c);
 
-        // 判断线程池状态是否处于 STOP 或者 SHUTDOWN，SHUTDOWN 状态还得判断任务队列是否为空
+        // 判断线程池状态是否处于 STOP 或者 SHUTDOWN，或者处于终止状态
+        // SHUTDOWN 状态还得判断任务队列是否为空
         if (rs >= SHUTDOWN && (rs >= STOP || workQueue.isEmpty())) {
+            // 减少工作线程
             decrementWorkerCount();
             return null;
         }
@@ -643,7 +648,8 @@ private Runnable getTask() {
         boolean timed = allowCoreThreadTimeOut || wc > corePoolSize;
 
         // 核心线程和非核心线程超时回收（timedOut 只有在经历过一轮超时获取之后才会变为 true）
-        // wc > 1 || workQueue.isEmpty() 当前线程不是最后一条，或者任务队列已经空了，此时回收线程
+        // wc > 1 || workQueue.isEmpty() 表示
+        // 在超时情况下，如果当前线程不是最后一条，或者任务队列已经空了，此时回收线程
         if ((wc > maximumPoolSize || (timed && timedOut))
             && (wc > 1 || workQueue.isEmpty())) {
             if (compareAndDecrementWorkerCount(c))
