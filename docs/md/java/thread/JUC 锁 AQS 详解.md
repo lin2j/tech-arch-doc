@@ -596,6 +596,8 @@ private final boolean parkAndCheckInterrupt() {
 
 # 参考文章
 
+- https://www.cnblogs.com/leesf456/p/5350186.html
+
 - https://pdai.tech/md/java/thread/java-thread-x-lock-AbstractQueuedSynchronizer.html
 - https://tech.meituan.com/2019/12/05/aqs-theory-and-apply.html
 - https://gee.cs.oswego.edu/dl/papers/aqs.pdf

@@ -625,3 +625,4 @@ protected boolean runAndReset() {
 # 参考文章
 
 - https://pdai.tech/md/java/thread/java-thread-x-juc-executor-FutureTask.html
+- https://www.cnblogs.com/linghu-java/p/8991824.html以及https://www.jianshu.com/p/d61d7ffa6abc

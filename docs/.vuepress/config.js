@@ -10,6 +10,7 @@ import {getSideBar4Middleware} from './sidebar/middleware'
 import {getSideBar4Interview} from './sidebar/interview'
 import {getSidebar4Algorithm} from './sidebar/algorithm'
 import {getSidebar4Project} from './sidebar/project'
+import {getSideBar4About} from './sidebar/about'
 
 const description = "包含：Java 基础知识，Java 进阶知识，开发框架，设计模式，数据库，中间件，计算机网络，面试题，算法，部署工具..."
 
@@ -183,6 +184,10 @@ export default {
                         ]
                     }
                 ]
+            },
+            {
+                "text": "关于",
+                "link": "/md/about/me.html"
             }
         ],
         sidebar: {
@@ -192,6 +197,7 @@ export default {
             "/md/interview/": getSideBar4Interview(),
             "/md/algorithm/": getSidebar4Algorithm(),
             "/md/project/": getSidebar4Project(),
+            "/md/about/": getSideBar4About(),
         }
     })
 }

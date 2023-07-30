@@ -1,3 +1,7 @@
+---
+title: Java 并发基础 volatile
+---
+
 volatile 关键字是 Java 虚拟机提供的一种轻量级的同步机制。volatile 有保证可见性、禁止指令重排的作用，不保证原子性。
 
 # volatile 特性验证

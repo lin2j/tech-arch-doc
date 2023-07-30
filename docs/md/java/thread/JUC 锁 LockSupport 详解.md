@@ -448,3 +448,9 @@ main: before wait
 - wait 阻塞的线程，需要通过 notify 来唤醒，而 park 阻塞的线程除了 unpark ，还有其他的唤醒方式；
 - wait - notify 二者的调用顺序不能互调，但是 park - unpark 的调用顺序可以互调；
 - wait 会释放锁资源，而 park 不会释放锁资源。
+
+# 参考文章
+
+- https://pdai.tech/md/java/thread/java-thread-x-lock-LockSupport.html
+- https://www.cnblogs.com/leesf456/p/5347293.html
+- https://blog.csdn.net/tangtong1/article/details/102829724
