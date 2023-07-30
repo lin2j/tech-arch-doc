@@ -38,17 +38,17 @@ function __getSideBar4Java() {
             sidebarDepth: 0,
             children: [
                 {
-                    text: "线程基础",
+                    text: "Java 线程基础",
                     link: "/md/java/thread/Java 并发 线程基础.html"
                 },
                 {
-                    text: "JUC 锁 LockSupport 详解",
-                    link: "/md/java/thread/JUC 锁 LockSupport 详解.html",
+                    text: "Java 并发基础 CAS",
+                    link: "/md/java/thread/Java 并发基础 CAS.html",
                     collapsible: false
                 },
                 {
-                    text: "JUC 锁 AQS 详解",
-                    link: "/md/java/thread/JUC 锁 AQS 详解.html",
+                    text: "Java 并发基础 volatile",
+                    link: "/md/java/thread/Java 并发基础 volatile.html",
                     collapsible: false
                 },
                 {
@@ -60,32 +60,15 @@ function __getSideBar4Java() {
                     text: "线程池 ThreadPoolExecutor 详解",
                     link: "/md/java/thread/Java 线程池 ThreadPoolExecutor 详解.html",
                     collapsible: false
-                }
-            ]
-        },
-        {
-            text: "Java 并发 - 验证与思考",
-            collapsible: false,
-            sidebarDepth: 0,
-            children: [
+                },
                 {
-                    text: "CAS与ABA问题",
-                    link: "/md/java/thread/think/CAS与ABA问题.html",
+                    text: "JUC 锁 LockSupport 详解",
+                    link: "/md/java/thread/JUC 锁 LockSupport 详解.html",
                     collapsible: false
                 },
                 {
-                    text: "volatile 关键字特性",
-                    link: "/md/java/thread/think/volatile 关键字特性的验证及思考.html",
-                    collapsible: false
-                },
-                {
-                    text: "synchronized 和 ReentrantLock 的区别",
-                    link: "/md/java/thread/think/浅谈synchronized和ReentrantLock的区别.html",
-                    collapsible: false
-                },
-                {
-                    text: "线程安全的集合类哪里找",
-                    link: "/md/java/thread/think/线程安全的集合类哪里找.html",
+                    text: "JUC 锁 AQS 详解",
+                    link: "/md/java/thread/JUC 锁 AQS 详解.html",
                     collapsible: false
                 }
             ]

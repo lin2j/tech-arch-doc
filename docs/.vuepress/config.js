@@ -111,8 +111,8 @@ export default {
                                 link: "/md/java/thread/Java 线程池 ThreadPoolExecutor 详解.html"
                             },
                             {
-                                text: "思考与验证",
-                                link: "/md/java/thread/think/浅谈synchronized和ReentrantLock的区别.html"
+                                text: "JUC 锁",
+                                link: "/md/java/thread/JUC 锁 LockSupport 详解.html"
                             }
                         ]
                     },
