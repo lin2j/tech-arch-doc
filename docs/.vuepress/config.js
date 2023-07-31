@@ -114,7 +114,12 @@ export default {
                             {
                                 text: "JUC 锁",
                                 link: "/md/java/thread/JUC 锁 LockSupport 详解.html"
+                            },
+                            {
+                                text: "JUC 工具类",
+                                link: "/md/java/thread/JUC 工具类 CountDownLatch 详解.html",
                             }
+
                         ]
                     },
                     {
