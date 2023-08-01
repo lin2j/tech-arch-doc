@@ -1,3 +1,7 @@
+---
+title: CountDownLatch 详解
+---
+
 # 简介
 
 CountDownLatch 是 JUC 包下的一个工具类，主要用来协调各个线程之间的同步，是一个同步器。CountDownLatch 是基于 AQS 实现的，因此先了解 AQS 可以帮助理解 CountDownLatch 的源码。
@@ -7,8 +11,6 @@ CountDownLatch 的核心思想是让一些线程阻塞直到另一些线程完�
 # 使用示例
 
 ```java
-package com.jia.blogdemo.thread.tool;
-
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -340,7 +342,7 @@ private void setHeadAndPropagate(Node node, int propagate) {
 
 doReleaseShared 在上面已经有过解释，这里就不再赘述。
 
-## 参考文章
+# 参考文章
 
 - https://pdai.tech/md/java/thread/java-thread-x-juc-tool-countdownlatch.html
 - https://blog.csdn.net/anlian523/article/details/106319294

@@ -76,6 +76,11 @@ function __getSideBar4Java() {
                     link: "/md/java/thread/JUC 工具类 CountDownLatch 详解.html",
                     collapsible: false
                 },
+                {
+                    text: "JUC 工具类 CyclicBarrier 详解",
+                    link: "/md/java/thread/JUC 工具类 CyclicBarrier 详解.html",
+                    collapsible: false
+                },
 
             ]
         },
