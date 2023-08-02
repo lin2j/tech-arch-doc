@@ -164,7 +164,7 @@ public CountDownLatch(int count) {
 
 下面是 countDown 方法的方法调用链。
 
-![CDL-count-down](https://www.lin2j.tech/blog-image/thread/CDL-count-down.png)
+<img src="https://www.lin2j.tech/blog-image/thread/CDL-count-down.png" alt="CDL-count-down" style="zoom:50%;" />
 
 ```java
 public void countDown() {
@@ -243,7 +243,7 @@ await 用来阻塞线程，直到计数器的计数变为 $0$。当计数变为 
 
 下面是 await 方法的方法调用链。
 
-![CDL-await](https://www.lin2j.tech/blog-image/thread/CDL-await.png)
+<img src="https://www.lin2j.tech/blog-image/thread/CDL-await.png" alt="CDL-await" style="zoom:50%;" />
 
 ```java
 public void await() throws InterruptedException {

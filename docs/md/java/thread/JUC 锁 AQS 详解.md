@@ -275,7 +275,7 @@ static final class Node {
 
 ReentrantLock 实现了 Lock 接口，下面是其非公平锁的 `lock()` 方法的方法调用链，其中紫色的部分是 AQS 的加锁流程，绿色的是 ReentrantLock 的代码。
 
-![AQS-acquire](https://www.lin2j.tech/blog-image/thread/AQS-acquire.png)
+<img src="https://www.lin2j.tech/blog-image/thread/AQS-acquire.png" alt="AQS-acquire" style="zoom:50%;" />
 
 
 
@@ -498,11 +498,11 @@ AQS 使用 release 方法来在独占模式下释放锁资源，它相当于 Loc
 
 下面先通过流程图简单了解 AQS 是如何释放 state 的。
 
-![AQS-unlock](https://www.lin2j.tech/blog-image/thread/AQS-unlock.png)
+<img src="https://www.lin2j.tech/blog-image/thread/AQS-unlock.png" alt="AQS-unlock" style="zoom:50%;" />
 
 ReentrantLock 实现了 Lock 接口，下面是其 `unlock()` 方法的方法调用链，其中紫色的部分是 AQS 的解锁流程，绿色的是 ReentrantLock 的代码。
 
-![AQS-release](https://www.lin2j.tech/blog-image/thread/AQS-release.png)
+<img src="https://www.lin2j.tech/blog-image/thread/AQS-release.png" alt="AQS-release" style="zoom:50%;" />
 
 - 调用 ReentrantLock 的 `unlock()` 方法进行资源释放；
 - ReentrantLock 调用内部类 Sync 从 AQS 继承的 `release()` 方法；
