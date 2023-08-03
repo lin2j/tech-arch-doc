@@ -38,8 +38,12 @@ function __getSideBar4Java() {
             sidebarDepth: 0,
             children: [
                 {
-                    text: "Java 线程基础",
+                    text: "Java 并发 线程基础",
                     link: "/md/java/thread/Java 并发 线程基础.html"
+                },
+                {
+                    text: "Java 并发 ThreadLocal 详解",
+                    link: "/md/java/thread/Java 并发 ThreadLocal 详解.html"
                 },
                 {
                     text: "Java 并发基础 CAS",
