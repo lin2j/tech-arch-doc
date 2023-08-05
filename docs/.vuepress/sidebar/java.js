@@ -56,6 +56,11 @@ function __getSideBar4Java() {
                     collapsible: false
                 },
                 {
+                    text: "Java 并发基础 synchronized",
+                    link: "/md/java/thread/Java 并发基础 synchronized.html",
+                    collapsible: false
+                },
+                {
                     text: "线程池 Future & FutureTask 详解",
                     link: "/md/java/thread/Java 线程池 FutureTask 详解.html",
                     collapsible: false
