@@ -30,6 +30,11 @@ function __getSideBar4Middleware() {
                     link: "/md/middleware/kafka/Kafka系列五消费者.html",
                     collapsible: false,
                 },
+                {
+                    text: "Kafka 系列 - 集群管理",
+                    link: "/md/middleware/kafka/Kafka系列六集群管理.html",
+                    collapsible: false,
+                },
             ]
         }
     ]
