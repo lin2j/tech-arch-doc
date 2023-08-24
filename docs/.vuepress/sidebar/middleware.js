@@ -35,6 +35,11 @@ function __getSideBar4Middleware() {
                     link: "/md/middleware/kafka/Kafka系列六集群管理.html",
                     collapsible: false,
                 },
+                {
+                    text: "Kafka 系列 - 储存机制",
+                    link: "/md/middleware/kafka/Kafka系列七存储机制.html",
+                    collapsible: false,
+                },
             ]
         }
     ]
