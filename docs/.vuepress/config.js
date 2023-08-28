@@ -191,6 +191,10 @@ export default {
                 ]
             },
             {
+                "text": "🤖️ ChatGPT",
+                "link": "/md/chatgpt/chatgpt.html"
+            },
+            {
                 "text": "关于",
                 "link": "/md/about/me.html"
             }
