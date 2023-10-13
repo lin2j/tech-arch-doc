@@ -2,7 +2,7 @@
 title: Future & FutureTask 详解
 ---
 
-# FutureTask 的作用
+## FutureTask 的作用
 
 Future 接口代表一个异步计算操作的结果，并且提供了各种方法用来控制这个计算操作，比如等待完成、获取结果、取消计算、计算状态。区别于阻塞等待，将计算过程交给子线程之后，主线程可以执行其他操作，等待异步操作完成后再获取结果，这样可以提高整个程序的运行效率。
 
@@ -10,7 +10,7 @@ Future 接口代表一个异步计算操作的结果，并且提供了各种方�
 
 FutureTask 通过为任务设置状态变化和封装等待线程链表的方式，来保证任务执行、结果获取的逻辑性，以及阻塞等待获取结果的能力。
 
-# FutureTask 的使用
+## FutureTask 的使用
 
 常见的使用方式是将 Callable 通过 `ExecutorService.submit()` 方法提交给线程池，这样线程池会返回一个 Future 类，底层实现就是 FutureTask。
 
@@ -134,7 +134,7 @@ public class FutureTaskExample2 {
 }
 ```
 
-# Future 和 FutrueTask 的关系
+## Future 和 FutrueTask 的关系
 
 ![FutureTask](https://www.lin2j.tech/blog-image/thread/FutureTask.png)
 
@@ -190,7 +190,7 @@ public interface Future<V> {
 }
 ```
 
-# FutureTask 的状态
+## FutureTask 的状态
 
 为了方便管理 FutureTask，作者为 FutureTask 定义了 $7$ 种状态。
 
@@ -218,9 +218,9 @@ private static final int INTERRUPTED  = 6;
 
 ![FutureTask-state](https://www.lin2j.tech/blog-image/thread/FutureTask-state.png)
 
-# FutureTask 源码解析
+## FutureTask 源码解析
 
-## 核心属性
+### 核心属性
 
 ```java
 /**
@@ -250,7 +250,7 @@ private volatile Thread runner;
 private volatile WaitNode waiters;
 ```
 
-## 构造函数
+### 构造函数
 
 FutureTask 有两个构造函数，分别用来接收 Callable 和 Runnable 对象。
 
@@ -307,7 +307,7 @@ static final class RunnableAdapter<T> implements Callable<T> {
 }
 ```
 
-## 内部类 WaitNode
+### 内部类 WaitNode
 
 ```java
 /**
@@ -322,7 +322,7 @@ static final class WaitNode {
 }
 ```
 
-## 任务的执行 run()
+### 任务的执行 run()
 
 ```java
 /**
@@ -413,7 +413,7 @@ private void handlePossibleCancellationInterrupt(int s) {
 }
 ```
 
-## 任务的取消 cancel()
+### 任务的取消 cancel()
 
 ```java
 /**
@@ -449,7 +449,7 @@ public boolean cancel(boolean mayInterruptIfRunning) {
 }
 ```
 
-## 等待线程的唤醒  finishCompletion()
+### 等待线程的唤醒  finishCompletion()
 
 ```java
 /**
@@ -486,7 +486,7 @@ private void finishCompletion() {
 }
 ```
 
-## 结果的获取 get()
+### 结果的获取 get()
 
 `get()` 方法在 state 为未完成或即将完成的状态下，通过 `awaitDone()` 方法实现阻塞等待的，并在 `report()` 方法中根据状态 state 返回结果或者抛出异常。 
 
@@ -586,7 +586,7 @@ private int awaitDone(boolean timed, long nanos)
 }
 ```
 
-## 任务的重启 runAndReset()
+### 任务的重启 runAndReset()
 
 `runAndReset()` 和 `run()` 方法最大的区别是 `runAndReset()` 不需要设置返回值，并且在执行过程中如果没有抛异常或者被执行线程被中断，是不会改变任务状态的。它用于执行需要多次执行的任务上。
 
@@ -622,7 +622,7 @@ protected boolean runAndReset() {
 }
 ```
 
-# 参考文章
+## 参考文章
 
 - https://pdai.tech/md/java/thread/java-thread-x-juc-executor-FutureTask.html
 - https://www.cnblogs.com/linghu-java/p/8991824.html以及https://www.jianshu.com/p/d61d7ffa6abc

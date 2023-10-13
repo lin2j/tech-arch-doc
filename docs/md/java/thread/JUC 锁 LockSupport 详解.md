@@ -2,15 +2,15 @@
 title: LockSupport 详解
 ---
 
-# LockSupport 的作用
+## LockSupport 的作用
 
 LockSupport 为线程和其他同步类提供了基本的阻塞原语。借助于 Unsafe 类的 API，LockSupport 提供了 park 操作用于阻塞线程，提供了 unpark 操作用于唤醒线程。
 
 park / unpark 底层的原理是“二元信号量”，你可以把它想象成只有一个许可证的 Semaphore，只不过这个信号量在重复执行 unpark 的时候也不会再增加许可证，最多只有一个许可证。
 
-# LockSupport 源码解析
+## LockSupport 源码解析
 
-## 核心属性
+### 核心属性
 
 ```java
 private static final sun.misc.Unsafe UNSAFE;
@@ -36,7 +36,7 @@ static {
 }
 ```
 
-## 构造函数
+### 构造函数
 
 ```java
 private LockSupport() {}
@@ -44,11 +44,11 @@ private LockSupport() {}
 
 LockSupport 作为一个工具类是不能被实例化的，其提供的方法都是 static 的，可以通过类名直接调用。
 
-## 核心函数
+### 核心函数
 
 LockSupport 的核心函数主要是两种类型：park 和 unpark，而 park 是用来阻塞线程的，unpark 用于唤醒指定线程。
 
-### unpark()
+#### unpark()
 
 ```java
 /**
@@ -64,7 +64,7 @@ public static void unpark(Thread thread) {
 } 
 ```
 
-### park()
+#### park()
 
 不同于 unpark 只有一个方法，park 有了三种类型的方法：不做任何设置、可以设置 blocker、可以设置超时时间。 park 方法的源码不复杂，这里直接通过表格来对比各个方法的区别会容易理解一些。
 
@@ -93,9 +93,9 @@ while (condition()) {
 }
 ```
 
-# LockSupport 的使用
+## LockSupport 的使用
 
-## 示例一：park 和 unpark 搭配使用
+### 示例一：park 和 unpark 搭配使用
 
 ```java
 import java.util.concurrent.TimeUnit;
@@ -163,7 +163,7 @@ Thread-0: target thread blocker info: null
 
 第 $1$ 、$2$ 行的打印顺序可能有变化，但是不影响。
 
-## 示例二：通过中断唤醒 park 的线程
+### 示例二：通过中断唤醒 park 的线程
 
 ```java
 import java.util.concurrent.TimeUnit;
@@ -228,7 +228,7 @@ main: after park
 Thread-0: target thread blocker info: null
 ```
 
-## 示例三：设置超时，自动唤醒 park 的线程
+### 示例三：设置超时，自动唤醒 park 的线程
 
 ```java
 import java.util.concurrent.TimeUnit;
@@ -252,7 +252,7 @@ main: before park
 main: after park
 ```
 
-## 示例四：先 unpark 再 park，线程不会阻塞
+### 示例四：先 unpark 再 park，线程不会阻塞
 
 ```java
 import java.util.concurrent.TimeUnit;
@@ -312,7 +312,7 @@ main: before park
 main: after park
 ```
 
-## 示例五：park 不会释放锁资源
+### 示例五：park 不会释放锁资源
 
 ```java
 import java.util.concurrent.locks.LockSupport;
@@ -367,7 +367,7 @@ before park
 
 打印第 $1$ 行之后，程序不会继续进行下去，因为 main 线程 park 之后，没有释放 lockThread 锁，所以 LockThread 线程无法获得锁去调用 unpark 方法，从而无法继续执行程序。
 
-# LockSupport.park() & Object.wait() 对比
+## LockSupport.park() & Object.wait() 对比
 
 如果通过 Object 的 `await()` 和 `notify()/notifyAll()` 阻塞唤醒线程，需要像下面这么做。
 
@@ -441,7 +441,7 @@ main: before wait
 
 在 nt2 那部分测试中，`main: after wait` 不会被打印，因为 main 线程调用 wait 之后，没有其他线程调用 notify 去唤醒 main 线程了，因此程序无法继续执行。
 
-## LockSupport.park() 和 Object.wait() 的区别
+### LockSupport.park() 和 Object.wait() 的区别
 
 - wait 需要在 synchronized 中执行，而 park 可以在任何地方执行；
 - wait 声明抛出 InterruptedException 异常，需要调用者处理或者抛出，而 park 没有声明抛出异常；
@@ -449,7 +449,7 @@ main: before wait
 - wait - notify 二者的调用顺序不能互调，但是 park - unpark 的调用顺序可以互调；
 - wait 会释放锁资源，而 park 不会释放锁资源。
 
-# 参考文章
+## 参考文章
 
 - https://pdai.tech/md/java/thread/java-thread-x-lock-LockSupport.html
 - https://www.cnblogs.com/leesf456/p/5347293.html

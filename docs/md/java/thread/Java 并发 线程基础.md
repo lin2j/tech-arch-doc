@@ -2,7 +2,7 @@
 title: 线程基础
 ---
 
-# 进程与线程
+## 进程与线程
 
 进程是内存中的一个应用程序，是操作系统的分配资源的基本单位。线程是进程中的一个任务，是任务调度和执行的基本单位。一个进程可以包含多个线程，而多个线程共享进程的资源，并且还有自己的上下文环境。
 
@@ -13,7 +13,7 @@ title: 线程基础
 - 线程的切换需要保存的状态信息比进程的状态信息少；
 - 线程的通信方式简单，一般通过共享内存的方式；而进程是通过管道、消息队列、信号量等等；
 
-## 线程的优先级
+### 线程的优先级
 
 Java 中的线程优先级分为 $10$ 级，优先级越高的线程拥有更高的几率执行，因为线程的优先级只是提供了相对的调度顺序，具体还是要看操作系统的调度算法和策略影响。
 
@@ -21,13 +21,13 @@ Java 的最低优先级是 $1$ （Thread.MIN_PRIORITY），最高优先级是 $1
 
 每个 Java 线程都应该设置优先级，通过 `java.lang.Thread#setPriority` 方法进行设置。
 
-## 线程的分类
+### 线程的分类
 
 - 主线程：程序启动的时候，操作系统会创建一条线程，随即会运行一条线程，这条线程就叫主线程。它负责启动其他的线程，以及在最后执行各种关闭的操作。
 - 子线程：程序中创建的其他线程。
 - 守护线程：守护线程是后台为其他线程服务的线程，当所有的非守护线程都终止，守护线程也会自动终止。Java 的垃圾回收线程就是一条守护线程。
 
-# 线程的创建方式
+### 线程的创建方式
 
 Java 中的线程创建方式有三种，分别是：
 
@@ -102,25 +102,25 @@ public class ThreadCreate {
 }
 ```
 
-# 线程的状态转换
+## 线程的状态转换
 
 ![线程状态](https://www.lin2j.tech/blog-image/thread/%E7%BA%BF%E7%A8%8B%E7%8A%B6%E6%80%81.png)
 
-## 新建（New）
+### 新建（New）
 
 创建了但是没有启动（调用 `start()` 方法）。
 
-## 可运行（Runnable）
+### 可运行（Runnable）
 
 可能正在执行，也可能在等待 CPU 时间片。
 
 包含了操作系统线程状态中的 Running 和 Ready。
 
-## 阻塞（Blocked）
+### 阻塞（Blocked）
 
 等待一个排他锁，如果获得锁就会结束此状态。
 
-## 无限期等待（Waiting）
+### 无限期等待（Waiting）
 
 等待其他线程显示唤醒，不然不会分配 CPU 时间片
 
@@ -130,7 +130,7 @@ public class ThreadCreate {
 | 没有设置 Timeout 参数的 Thread.join() 方法 | 等待被调用的线程执行完毕                |
 | LockSupport.park()                         | -                                       |
 
-## 限期等待（Time Waiting）
+### 限期等待（Time Waiting）
 
 无需等待其他线程显示唤醒，等待一定时间之后被系统自动唤醒。
 
@@ -148,7 +148,7 @@ public class ThreadCreate {
 
 可以是线程结束任务之后自己结束，或者产生了异常而结束。
 
-# 线程的中断
+## 线程的中断
 
 一条线程执行完任务可以自己自动结束，如果在执行任务的时候发生异常也会提前结束。
 
@@ -156,11 +156,11 @@ public class ThreadCreate {
 
 如果调用 `interrupt()` 方法时线程进入、退出阻塞状态，都会触发 InterruptedException 提前结束线程，否则需要用户自己去监测线程中断状态并做处理，
 
-## InterruptedException
+### InterruptedException
 
 如果线程被  `Object.wait()` , ` Thread.join()` 和 `Thread.sleep()` 三种方法之一阻塞，此时调用该线程的 `interrupt()` 方法，那么该线程将抛出一个  InterruptedException 中断异常（该线程必须事先预备好处理此异常），从而提早地终结被阻塞状态。如果线程没有被阻塞，这时调用 `interrupt()` 将不起作用，直到执行到 `wait()`, `sleep()`, `join()` 时,才马上会抛出 InterruptedException。
 
-## interrupted()
+### interrupted()
 
 调用 `interrupt()` 方法会设置线程的中断标记，此时调用 `interrupted()` 方法会返回 true。因此可以在循环体中使用 `interrupted()` 方法来判断线程是否处于中断状态，从而提前结束线程。 `interrupted()` 方法会清除线程的中断状态，所以如果调用 `interrupt()`中断线程后，连续调用两次 `interrupted()`，第一次会返回 true，而第二次返回 false。
 
@@ -216,7 +216,7 @@ public class ThreadInterrupt {
 }
 ```
 
-# 线程的安全问题
+## 线程的安全问题
 
 线程安全是指某个方法或某段代码，在多线程中能够正确的执行，不会出现数据不一致或数据污染的情况，我们把这样的程序称之为线程安全的，反之则为非线程安全的。
 
@@ -228,11 +228,11 @@ public class ThreadInterrupt {
   - 栈封闭：多个线程访问方法的局部变量，不会出现线程安全，因为局部变量存储在虚拟机方法栈中，属于线程私有；
   - 线程本地存储：使用 ThreadLocal 使得对象在每个线程都有一个副本，避免操作同一个共享变量。
 
-# 多线程的协作
+## 多线程的协作
 
 当多个线程同时在处理某一个问题时，需要协调各个线程之间的工作，否则容易产生线程安全问题。
 
-## join()
+### join()
 
 当线程调用另一个线程的 `join()` 方法时，会将当前线程阻塞，直到另一条线程完成。
 
@@ -292,7 +292,7 @@ B: after join
 B
 ```
 
-## wait()、notify()/notifyAll()
+### wait()、notify()/notifyAll()
 
 调用 `wait()` 方法会使得当前线程阻塞起来，等待满足某一条件之后，其他线程调用 `notify()` 或者 `notifyAll()` 将当前线程唤醒。
 
@@ -494,7 +494,7 @@ public class ThreadCondition {
 }
 ```
 
-# 参考文章
+## 参考文章
 
 - https://pdai.tech/md/java/thread/java-thread-x-thread-basic.html
 - https://blog.csdn.net/jiadajing267/article/details/80590000

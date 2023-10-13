@@ -1,6 +1,9 @@
 import {mdEnhancePlugin} from 'vuepress-plugin-md-enhance'
 import {palettePlugin} from '@vuepress/plugin-palette'
 import {docsearchPlugin} from '@vuepress/plugin-docsearch'
+import { clipboardPlugin } from 'vuepress-plugin-clipboard'
+
+import vuepressPluginAnchorRight from 'vuepress-plugin-anchor-right';
 
 import {defaultTheme} from 'vuepress'
 
@@ -41,7 +44,9 @@ export default {
                     },
                 },
             }
-        })
+        }),
+        vuepressPluginAnchorRight(),
+        clipboardPlugin({}),
     ],
     locales: {
         "/": {
@@ -69,9 +74,14 @@ export default {
         ["meta", {name: "apple-mobile-web-app-capable", content: "yes"}]
     ],
     theme: defaultTheme({
+        sidebarType: 'right',
         displayAllHeaders: false,
         navbar: [
             {text: "首页", link: "/"},
+            // {
+            //     "text": "🤖️ ChatGPT",
+            //     "link": "/md/chatgpt/chatgpt.html"
+            // },
             {
                 text: "Java",
                 children: [
@@ -189,10 +199,6 @@ export default {
                         ]
                     }
                 ]
-            },
-            {
-                "text": "🤖️ ChatGPT",
-                "link": "/md/chatgpt/chatgpt.html"
             },
             {
                 "text": "关于",

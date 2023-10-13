@@ -4,11 +4,11 @@ title: AQS 详解
 
 
 
-# AQS 简介
+## AQS 简介
 
 AQS 即 AbstractQueuedSynchronizer 类，是一个用来实现同步器和锁的框架。其通过模板模式，使得继承类只需要简单实现几个方法，重点关注在 state 的获取和释放逻辑上，便可以很方便地去实现同步器和锁，比如 ReentrantLock、ReentrantReadWriteLock、CountDownLatch、Semaphore 等等。
 
-## AQS 核心思想
+### AQS 核心思想
 
 AQS 的核心思想是通过一个共享变量 state 来模拟资源，线程争夺资源的实质是获得 state 的修改权。
 
@@ -16,7 +16,7 @@ AQS 的核心思想是通过一个共享变量 state 来模拟资源，线程争
 
 ![AQS-CLH](https://www.lin2j.tech/blog-image/thread/AQS-CLH.png)
 
-## AQS 资源共享模式
+### AQS 资源共享模式
 
 - Exclusive(独占模式)：只有一条线程能持有锁资源，例如 ReentrantLock。根据独占模式的锁抢夺方式又可以分为公平锁和非公平锁。
   - 公平锁：抢夺锁时会先判断队列中是否有其他线程在执行或者等待，如果有则进入队列。
@@ -25,7 +25,7 @@ AQS 的核心思想是通过一个共享变量 state 来模拟资源，线程争
 
 一般来讲在实现同步器和锁的时候，只需要实现其中一种模式即可，但是也可以同时实现两种模式，例如 ReentrantReadWriteLock。
 
-## AQS 的模板模式
+### AQS 的模板模式
 
 AQS 是模板模式的一个经典应用，继承类只要根据需要去重写指定的几个方法，便可以获得自己的同步器，而重写的逻辑实际是聚焦于对 state 的获取和释放上。
 
@@ -44,7 +44,7 @@ tryReleaseShared()
 isHeldExclusively()
 ```
 
-# AQS 使用示例
+## AQS 使用示例
 
 在继承 AQS 实现自己的锁时，通常是将继承类作为一个内部类 Sync，之后该内部类作为外部类的一个成员变量去操作。
 
@@ -187,7 +187,7 @@ class SimpleLock implements Lock {
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | pool-1-thread-1: 0<br/>pool-1-thread-2: 1<br/>pool-1-thread-3: 2<br/>pool-1-thread-4: 3<br/>pool-1-thread-5: 4<br/>pool-1-thread-1: 5<br/>pool-1-thread-2: 6<br/>pool-1-thread-3: 7<br/>pool-1-thread-4: 8<br/>pool-1-thread-5: 9 | pool-1-thread-1: 0<br/>pool-1-thread-4: 1<br/>pool-1-thread-5: 2<br/>pool-1-thread-5: 3<br/>pool-1-thread-5: 4<br/>pool-1-thread-5: 5<br/>pool-1-thread-5: 6<br/>pool-1-thread-2: 7<br/>pool-1-thread-3: 8<br/>pool-1-thread-4: 9 |
 
-# AQS 代码详解
+## AQS 代码详解
 
 AQS 的实现过程考虑了很多功能，比如加锁解锁、超时等待、非阻塞的尝试加锁解锁、资源共享模式、条件等待、中断机制等，代码加注释有两千多行。下面通过加锁过程、解锁过程、中断机制三个方面，结合 ReentrantLock 来看一下 AQS 是如何运作的。
 
@@ -197,7 +197,7 @@ AQS 的方法有很多，详解过程中只会挑出一些关键方法进行解�
 
 ![AQS](https://www.lin2j.tech/blog-image/thread/AQS.png)
 
-## AQS 核心数据结构
+### AQS 核心数据结构
 
 CLH 队列作为协调线程阻塞与唤醒机制的基础数据结构，其节点对应的数据结构是内部类 Node。Node 类封装了线程，设置前驱、后继节点指针用于队列操作，同时设置了不同的节点状态 waitStatus 用于表示节点处于不同状态下。
 
@@ -265,7 +265,7 @@ static final class Node {
 }
 ```
 
-## AQS 加锁过程
+### AQS 加锁过程
 
 在 AQS 中，使用来 acquire 方法来做独占模式的加锁操作，它相当于 Lock 接口的 `lock()` 方法。它的内部调用了 `tryAcquire()` 方法，而该方法需要子类去重写，因此这里借助 ReentrantLock 来帮助理解整个完整的加锁过程。
 
@@ -284,7 +284,7 @@ ReentrantLock 实现了 Lock 接口，下面是其非公平锁的 `lock()` 方�
 - AQS 的 `acquire()` 方法会调用 `tryAcquire()` 方法， `tryAcquire()` 需要子类自定义实现；
 - `tryAcquire()` 是获取锁的方法，如果失败了，则会执行 AQS 定义好的等待逻辑。
 
-### 加锁 acquire
+#### 加锁 acquire
 
 ```java
 public final void acquire(int arg) {
@@ -301,7 +301,7 @@ acquire 方法比较简短，描述了大概的加锁过程。
 3. 然后调用 acquireQueued 不断的获取锁资源，直到获取锁成功。
 4. 获取锁的过程中如果被中断，则调用 selfInterrupt 自我中断。
 
-### 入队 addWaiter
+#### 入队 addWaiter
 
 ```java
 private Node addWaiter(Node mode) {
@@ -368,7 +368,7 @@ if (compareAndSetTail(t, node)) {
 
 ![AQS-set-tail](https://www.lin2j.tech/blog-image/thread/AQS-set-tail.png)
 
-### 获取与阻塞 acquireQueued
+#### 获取与阻塞 acquireQueued
 
 ```java
 final boolean acquireQueued(final Node node, int arg) {
@@ -437,7 +437,7 @@ private final boolean parkAndCheckInterrupt() {
 }
 ```
 
-### 取消加锁 cancelAcquire
+#### 取消加锁 cancelAcquire
 
 acquireQueued 通过自旋不断的去获取锁，而当获取锁失败时，需要执行取消加锁操作 cancelAcquire，将 node 标记为 CANCELLED，并将节点从同步队列中移除。取消的节点在移除过程中如果遇到竞争，那么不会做其他的操作，直接返回。
 
@@ -492,7 +492,7 @@ private void cancelAcquire(Node node) {
 
 ![AQS-cancelAcquire](https://www.lin2j.tech/blog-image/thread/AQS-cancelAcquire.png)
 
-## AQS 解锁过程
+### AQS 解锁过程
 
 AQS 使用 release 方法来在独占模式下释放锁资源，它相当于 Lock 接口的 `unlock()` 方法。它的内部调用了 `tryRelease()` 方法，也是一个需要子类重写的方法。
 
@@ -509,7 +509,7 @@ ReentrantLock 实现了 Lock 接口，下面是其 `unlock()` 方法的方法调
 - AQS 的 `release()` 方法会调用 Sync 重写的 `tryRelease()` 方法；
 - `tryRelease()` 是释放资源的方法，成功释放后，则会执行 AQS 定义好的唤醒后续线程的逻辑 。
 
-### 资源释放 release
+#### 资源释放 release
 
 ```java
 public final boolean release(int arg) {
@@ -529,7 +529,7 @@ release 方法描述了大概的资源释放过程。
 2. 成功释放资源之后，找到队列的头节点，如果头节点不为空，则唤醒头节点之后的线程；
 3. 最终返回 tryRelease 的结果。
 
-### 线程的唤醒 unparkSucessor
+#### 线程的唤醒 unparkSucessor
 
 ```java
 // 释放后继节点
@@ -555,7 +555,7 @@ private void unparkSuccessor(Node node) {
 }
 ```
 
-## AQS 中断处理
+### AQS 中断处理
 
 AQS 在获取锁的过程中，如果检测到线程已经发生中断，那么会有两种处理方式
 
@@ -594,10 +594,9 @@ private final boolean parkAndCheckInterrupt() {
 
 在这个过程中如果发生中断，AQS 采用记录中断方式，然后继续获取锁资源。这样用户可以选择在合适的时间去处理中断。
 
-# 参考文章
+## 参考文章
 
 - https://www.cnblogs.com/leesf456/p/5350186.html
-
 - https://pdai.tech/md/java/thread/java-thread-x-lock-AbstractQueuedSynchronizer.html
 - https://tech.meituan.com/2019/12/05/aqs-theory-and-apply.html
 - https://gee.cs.oswego.edu/dl/papers/aqs.pdf

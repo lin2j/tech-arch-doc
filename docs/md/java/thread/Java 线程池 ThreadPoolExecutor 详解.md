@@ -2,7 +2,7 @@
 title: 线程池 ThreadPoolExecutor 详解
 ---
 
-# 线程池的概念
+## 线程池的概念
 
 首先系统空闲时在创建大量线程，这些线程的集合成为线程池。线程的生老病死都由线程池来决定。
 
@@ -10,7 +10,7 @@ title: 线程池 ThreadPoolExecutor 详解
 
 ![ThreadPoolExecutor](https://www.lin2j.tech/blog-image/thread/thread-pool-work.png)
 
-# 线程池的好处
+## 线程池的好处
 
 - 降低资源的消耗：线程在创建和销毁时都是很耗费资源和时间的，我们希望通过一种机制，可以避免频繁地创建和销毁线程。
 
@@ -22,7 +22,7 @@ title: 线程池 ThreadPoolExecutor 详解
 
 > 即线程复用；控制最大并发数；管理线程
 
-# 线程池的使用
+## 线程池的使用
 
 Java  中的线程池一般是使用 ThreadPollExecutor 实现。
 
@@ -135,7 +135,7 @@ public class ThreadPoolExample {
 }
 ```
 
-# 线程池的参数
+## 线程池的参数
 
 下面是 ThreadPoolExecutor 的构造函数，可以看到主要有 $7$ 个参数需要了解。
 
@@ -209,7 +209,7 @@ public ThreadPoolExecutor(int corePoolSize,
 
   当队列和最大线程池都满了之后的拒绝策略，在线程池的线程数达到最大且任务队列容量达到最大时，新到来的任务会执行拒绝策略
 
-## 线程池添加任务
+### 线程池添加任务
 ```java
 // execute只支持Runnable参数，并且没有返回值
 void execute(Runnable command);
@@ -218,12 +218,12 @@ void execute(Runnable command);
 <T> Future<T> submit(Runnable command, T result);
 Future<?> submit(Runnable task);
 ```
-## Executors 内置线程池
+### Executors 内置线程池
 Executors 会预先配置好几种类型的线程池方便开发者使用，但是不建议直接使用内置的线程池，因为 Executors 提供的线程池的阻塞队列，在 new 的时候，capacity 使用的是 Integer.MAX_VALUE。可以通过模仿 Executors 的参数配置，自己配一个线程池使用。
 
 Java 通过 Executors 提供四种线程池，这几个线程池都是直接或者间接通过配置ThreadPoolExecutor的参数实现的。
 
-### FixedThreadPool
+#### FixedThreadPool
 固定数量的线程池，创建时声明最大的线程数目。超出的线程会在队列中等待。适合执行长期任务，性能好很多。
 
 创建方法有两种
@@ -243,7 +243,7 @@ public static ExecutorService newFixedThreadPool(int nThreads) {
 ```
 可以注意到 corePoolSize 和 maximumPoolSize 的值是相等的，使用的是 LinkedBlockingQueue
 
-### CachedThreadPool
+#### CachedThreadPool
 可缓存线程池，线程数目无限制，有空闲线程则复用，没有就创建新的线程。（数目不限，有闲则用，无闲新建）。但是如果空闲太久，线程池又会自动地销毁空闲线程。
 
 它可以一定程度减少了频繁创建/销毁线程的花销，适合执行很多短期异步的小程序或者负载较轻的任务。
@@ -263,7 +263,7 @@ public static ExecutorService newCachedThreadPool() {
 可以看到 maximumPoolSize 等于 Integer.MAX_VALUE。
 这里用的是 SynchronousQueue队列，这个队列是不存储任何元素的。对于每个 put/offer 操作,必须等待一个 take/poll 操作。当线程空闲超过60秒，就销毁线程。
 
-### ScheduleThreadPool
+#### ScheduleThreadPool
 支持定时任务及周期性任务执行。
 
 创建方法
@@ -283,7 +283,7 @@ public ScheduledThreadPoolExecutor(int corePoolSize) {
           new DelayedWorkQueue());
 }
 ```
-### SingleThreadExecutor
+#### SingleThreadExecutor
 单线程的线程池，有且只有一个线程在执行任务。所有任务按照入队的顺序来执行，先来先服务
 
 创建方法
@@ -299,7 +299,7 @@ public static ExecutorService newSingleThreadExecutor() {
                                 new LinkedBlockingQueue<Runnable>()));
 }
 ```
-# 线程池的关闭
+## 线程池的关闭
 
 ExecutorService提供了两个方法来关闭线程池
 
@@ -321,7 +321,7 @@ ExecutorService提供了两个方法来关闭线程池
 ```
 `pool.awaitTermination(1, TimeUnit.SECONDS) ` 会每隔一秒钟检查一次是否执行完毕（状态为 TERMINATED），当从 while 循环退出时就表明线程池已经完全终止了。
 
-# 线程池的状态
+## 线程池的状态
 
 为了方便管理线程池，线程池的实现细节中定义了 $5$个状态来表示线程池的生命周期。
 
@@ -344,7 +344,7 @@ private static final int TERMINATED =  3 << COUNT_BITS;
 
 线程池状态和工作线程数量是紧密关联的。例如，当线程池处于运行状态时，可以继续添加新任务并创建新线程；而在线程池关闭或停止时，不再允许添加新任务，并逐渐停止工作线程的执行。将状态和线程数量放在同一个变量中可以更方便地管理这种关联关系。
 
-## 状态转换
+### 状态转换
 
 从上面的源代码可以知道线程池分别有 $5$ 种状态：RUNNING、SHUTDOWN、STOP、TIDYING、TERMINATED
 
@@ -358,7 +358,7 @@ private static final int TERMINATED =  3 << COUNT_BITS;
 
 ![thread-pool-state](https://www.lin2j.tech/blog-image/thread/thread-pool-state.png)
 
-# 线程池的任务执行
+## 线程池的任务执行
 
 开始之前，讲一下 Woker 内部类的情况。Woker 是 ThreadPoolExecutor 的内部类，既充当工作线程的角色，又是一个可执行的任务。
 
@@ -398,7 +398,7 @@ private final class Worker extends AbstractQueuedSynchronizer implements Runnabl
 
 
 
-## execute() 方法
+### execute() 方法
 
 ```java
 public void execute(Runnable command) {
@@ -431,7 +431,7 @@ public void execute(Runnable command) {
 }
 ```
 
-## addWorker() 方法
+### addWorker() 方法
 
 ```java
 /**
@@ -543,7 +543,7 @@ private void addWorkerFailed(Worker w) {
 }
 ```
 
-## runWorker() 方法
+### runWorker() 方法
 
 ```java
 /**
@@ -611,7 +611,7 @@ final void runWorker(Worker w) {
 }
 ```
 
-## getTask() 方法
+### getTask() 方法
 
 ```java
 /**
@@ -672,7 +672,7 @@ private Runnable getTask() {
 }
 ```
 
-# 线程池的拒绝策略
+## 线程池的拒绝策略
 
 当线程池中的任务缓存队列已满，并且线程池中的线程数目达到最大线程数量，如果还有任务要到来，就要采用拒绝策略，通常有以下四种：
 
@@ -748,7 +748,7 @@ public class MyThreadPoolDemo {
 }
 ```
 
-## AbortPolicy
+### AbortPolicy
 
 这是默认的拒绝策略。
 
@@ -785,7 +785,7 @@ public static class AbortPolicy implements RejectedExecutionHandler {
 
 ![AbortPolicy](https://www.lin2j.tech/blog-image/thread/AbortPolicy.png)
 
-## CallerRunPolicy
+### CallerRunPolicy
 
 ```java
 /**
@@ -810,7 +810,7 @@ public static class CallerRunsPolicy implements RejectedExecutionHandler {
 
 ![CallerRunsPolicy](https://www.lin2j.tech/blog-image/thread/CallerRunsPolicy.png)
 
-## DiscardOldestPolicy
+### DiscardOldestPolicy
 
 ```java
 /**
@@ -837,7 +837,7 @@ public static class DiscardOldestPolicy implements RejectedExecutionHandler {
 
 ![DiscardOldestPolicy](https://www.lin2j.tech/blog-image/thread/DiscardOldestPolicy.png)
 
-## DiscardPolicy
+### DiscardPolicy
 
 ```java
 /**
@@ -858,6 +858,6 @@ public static class DiscardPolicy implements RejectedExecutionHandler {
 
 
 
-# 参考文章
+## 参考文章
 
 - https://pdai.tech/md/java/thread/java-thread-x-juc-executor-ThreadPoolExecutor.html

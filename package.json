@@ -6,8 +6,11 @@
   "author": "lin2j <linjinjia047@163.com>",
   "license": "MIT",
   "dependencies": {
+    "@snippetors/vuepress-plugin-code-copy": "^1.2.3",
     "@vuepress/plugin-docsearch": "2.0.0-beta.63",
     "vuepress": "^2.0.0-beta.63",
+    "vuepress-plugin-anchor-right": "^0.0.1-beta.18",
+    "vuepress-plugin-clipboard": "^2.1.5",
     "vuepress-plugin-md-enhance": "^2.0.0-beta.228"
   },
   "scripts": {

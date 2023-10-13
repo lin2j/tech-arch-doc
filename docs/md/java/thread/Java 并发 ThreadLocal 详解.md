@@ -2,7 +2,7 @@
 title: ThreadLocal 详解
 ---
 
-# 简介
+## 简介
 
 ThreadLocal 即线程本地变量的意思，常被用来处理线程安全问题。ThreadLocal 的作用是为多线程中的每一个线程都创建一个线程自身才能用的实例对象，通过线程隔离的方式保证了实例对象的使用安全。
 
@@ -18,7 +18,7 @@ ThreadLocal 即线程本地变量的意思，常被用来处理线程安全问�
 >   - 栈封闭（方法的局部变量）
 >   - 本地存储（ThreadLocal）
 
-# 使用示例
+## 使用示例
 
 下面用两个例子来演示 ThreadLocal 的线程隔离能力，看看它是如何规避线程安全问题的。代码从两个方面来测试
 
@@ -123,7 +123,7 @@ Exception in thread "3" java.lang.NumberFormatException: For input string: ".E0"
 5	ThreadLocal格式化: Sun Jan 01 00:00:00 CST 2023
 ```
 
-# 源码详解
+## 源码详解
 
 ThreadLocal 有一个内部类叫 ThreadLocalMap，它是一个映射表，将 ThreadLocal 和存储对象作为键值对存储起来。然后关键的是，每个 Thread 对象中，都会有一个叫 threadLocals 的成员变量，它的类型是 ThreadLocalMap。在 ThreadLocal 使用 threadLocals 变量时，如果发现它是 null，那么就会 new 一个新的对象。
 
@@ -133,7 +133,7 @@ ThreadLocal 的关键理解点是，当我们向 ThreadLocal 设置、获取、�
 
 <img src="https://www.lin2j.tech/blog-image/thread/Thread-threadLocals.png" alt="Thread-threadLocals" style="zoom:50%;" />
 
-## 内部类 ThreadLocalMap
+### 内部类 ThreadLocalMap
 
 ThreadLocalMap 是一个哈希表，用于存储 ThreadLocal 和 存储对象的映射关系。ThreadLocalMap 也包含一个内部类 Entry，它是一个键值对，其中键为弱引用，值为存储对象。
 
@@ -218,7 +218,7 @@ static class ThreadLocalMap {
 
 ThreadLocalMap 还有很多方法，下面涉及到的时候再具体讲解。
 
-## 属性
+### 属性
 
 ThreadLocal 的属性有三个，主要是用来生成 ThreadLocal 对象的哈希值。
 
@@ -251,7 +251,7 @@ private static int nextHashCode() {
 
 每当创建一个 ThreadLocal 对象，nextHashCode 的值就会增加 HASH_INCREMENT。
 
-## 构造函数
+### 构造函数
 
 ThreadLocal 的构造函数只有一个。
 
@@ -294,7 +294,7 @@ static final class SuppliedThreadLocal<T> extends ThreadLocal<T> {
 }
 ```
 
-## 核心函数 set
+### 核心函数 set
 
 ```java
 // 保存存储对象至当前线程
@@ -417,7 +417,7 @@ private void replaceStaleEntry(ThreadLocal<?> key, Object value,
 
 expungeStaleEntry 和 rehash 方法分别是过期清理和扩容的方法，下面再专门讲。
 
-## 核心函数 get
+### 核心函数 get
 
 ```java
 public T get() {
@@ -481,7 +481,7 @@ private Entry getEntryAfterMiss(ThreadLocal<?> key, int i, Entry e) {
 }
 ```
 
-## 核心函数 remove
+### 核心函数 remove
 
 ```java
 public void remove() {
@@ -506,7 +506,7 @@ private void remove(ThreadLocal<?> key) {
 }
 ```
 
-## 扩容 rehash
+### 扩容 rehash
 
 ```java
 /**
@@ -554,7 +554,7 @@ ThreadLocalMap 的扩容思路比较简单，先将过期的元素全部清理�
 
 扩容的时候先 new 一个大小为原先 table 两倍的数组 newTab，然后将 table 内的元素全部根据新的容量重新计算位置，插入到 newTab 的对应位置上。如果对应位置已经有值了，则从当前位置开始向后寻找，找到第一个 Entry 为 null 的位置插入。
 
-## 过期清理
+### 过期清理
 
 前面讲过 ThreadLocalMap 的 Entry 的 key 是 WeakReference 弱引用。当发生 GC 时，弱引用指向的对象会被回收，因此会出现 Entry 的 key 为 null 的情况。这种情况下，要及时清理过期的 Entry，从而避免内存泄漏和无效数据的积累。
 
@@ -598,9 +598,9 @@ private int expungeStaleEntry(int staleSlot) {
 
 set、get、remove 方法，在遍历的时候如果遇到 key 为 null 的情况，都会调用 expungeStaleEntry 方法来清除 key 为 nul l的 Entry。
 
-# 拓展
+## 拓展
 
-## 内存泄漏
+### 内存泄漏
 
 ```java
 static class Entry extends WeakReference<ThreadLocal<?>> {
@@ -618,7 +618,7 @@ static class Entry extends WeakReference<ThreadLocal<?>> {
 
 因此为了避免这种情况，我们可以在使用完 ThreadLocal 后，需要手动调用 remove 方法，以避免出现内存泄漏。
 
-# 参考文章
+## 参考文章
 
 - https://zhuanlan.zhihu.com/p/34406557
 - https://pdai.tech/md/java/thread/java-thread-x-threadlocal.html

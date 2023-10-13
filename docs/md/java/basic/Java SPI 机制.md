@@ -2,7 +2,7 @@
 title: Java SPI 机制
 ---
 
-# 什么是 SPI 机制
+## 什么是 SPI 机制
 
 SPI （Service Provider Interface）是 Java 内置的一种**服务提供**发现机制，将功能的实现交给第三方，用来拓展和替换组件。
 
@@ -14,7 +14,7 @@ SPI 机制允许将功能的实现抽离出原本的模块，在模块化设计�
 
 <img src="https://www.lin2j.tech/blog-image/basic/SPI%E6%9C%BA%E5%88%B6.png" alt="SPI机制" >
 
-# SPI 机制的简单示例
+## SPI 机制的简单示例
 
 假设当前有一个 `DataSearch` 接口，搜索的实现可以基于数据库或者 Elastic Search 实现。
 
@@ -91,21 +91,21 @@ Elastic Search
 
 这就是 SPI 的使用方式，[示例代码下载](https://www.lin2j.tech/blog-image/code/spi-demo.zip)
 
-# SPI 机制的应用
+## SPI 机制的应用
 
-## 数据库驱动程序加载
+### 数据库驱动程序加载
 
 Java数据库连接（JDBC）规范使用了SPI机制，通过在classpath下提供特定命名的配置文件，让开发者可以注册和加载数据库驱动程序的实现类。这样可以实现在运行时根据配置文件加载不同的数据库驱动程序。
 
-## SLF4J 日志门面
+### SLF4J 日志门面
 
 许多Java日志系统（如SLF4J）使用SPI机制，通过提供不同的实现类来支持不同的日志框架。开发者可以根据需要选择合适的日志实现，并在classpath下提供相应的配置文件，实现日志系统的动态切换和扩展。
 
-## 插件系统
+### 插件系统
 
 许多应用程序（比如 Eclipse）或框架都提供了插件机制，允许开发者通过SPI机制来注册和加载插件。这样可以让应用程序在不修改源代码的情况下，通过提供新的插件实现类来扩展功能，实现动态的插件加载和卸载。
 
-## Spring 中的 SPI 机制
+### Spring 中的 SPI 机制
 
 与 Java 内置的 SPI 有异曲同工之妙的是 Spring 的工厂加载机制，即 `Spring Factories Loader`，用户先在 `META-INF/spring.factories`  路径下配置好接口和实现类的关系，然后通过 `SpringFactoriesLoader` 加载实现类，该机制可以为框架上下文动态的增加扩展。
 
@@ -117,7 +117,7 @@ com.jia.spidemo.spring_factory_test.IUserService=\
   com.jia.spidemo.spring_factory_test.UserService2
 ```
 
-# SPI 的实现原理
+## SPI 的实现原理
 
 ```java
 package java.util;
@@ -404,7 +404,7 @@ public final class ServiceLoader<S>
 2. 静态变量 `PREFIX = "META-INF/services/"` 规定了配置文件必须放在 `META-INF/services/` 路径下。
 3. 服务提供者实例化是调用 `Class.forName()` 方法进行的，实例化之后，服务提供者会被缓存在 `providers` 有序列表中。
 
-# SPI 机制的缺陷
+## SPI 机制的缺陷
 
 - ServiceLoader 不是线程安全的，多个线程同时使用会有并发问题；
 - 不能按需加载，每次都需要通过遍历来获取，对于不想要和实例化很耗时的类，也会被实例化；
